@@ -1,0 +1,3 @@
+﻿  Schiffeversenken.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Schiffeversenken\Schiffeversenken.cpp(122,24): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+  Schiffeversenken.vcxproj -> C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\x64\Debug\Schiffeversenken.exe
