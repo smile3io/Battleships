@@ -15,16 +15,16 @@ using action = function<void()>;
 - Salvo mode 5 shots at once
 - uboot -> kann mit anderem schiff überlappen oder kann nach treffer
 - unterwasser gehen oder position ändern Leaderboard KI Schwierigkeiten
-- Feldgrößen - Schiffs anzahl
+X Feldgrößen - Schiffs anzahl
 - Mehrspieler zB 2-4
 - Schiffe automatisch plazieren
-- Regeln ändern (Platz zwischen Schiffen)
+X Regeln ändern (Platz zwischen Schiffen)
 - Unterschiedliche Schiffs größen  2345(6789)->wenn map größer als 10
 - für jedes schiff eine fähigkeit
 - (Abilities wie "Sonar"->deckt fläche auf, Unterwasser Minen -> sagen dass
 - gehitet wurde als ablenkung, torpedo -> schießt in einer linie) Anzahl an
-- schiffen berechnung -> (size*size)*0.17 -> anzahl an schiff feldern -> ans -
-- 2(3,3,4,5)   -> periodisch
+X schiffen berechnung -> (size*size)*0.17 -> anzahl an schiff feldern -> ans -
+X 2(3,3,4,5)   -> periodisch
 */
 //---------------------------------------ENUM--------------------------------------------------
 
@@ -37,7 +37,9 @@ enum Settings{
     EASY, NORMAL, HARD,     // diff
     STANDARD, SALVO, RACE,  // mode
     FAR, CLOSE,             // dist
-    FIVE = 17, TEN = 30     // ship
+    FIVE = 17, TEN = 30,    // ship
+    UP = 72, DOWN = 80,     // arrow
+    LEFT = 75, RIGHT = 77   // arrow
 };
 
 //---------------------------------------Struct------------------------------------------------
@@ -62,13 +64,42 @@ class Ships {
 };
 
 class Player {
-    int number;       // player number
-    string name;      // player name
-    int sessionScore; // session score calc -> win, ships sunken points
+public:
+    int number;         // player number
+    string name;        // player name
+    int score;          // session score calc -> win, ships sunken points
+    vector<vector<char>> field; // own player field 
+    int shots;          // shot count 
+
+    //
+    void shoot(){}
+
+    //
+    void placeShips(){
+        int input = _getch();
+        if (input == UP) {
+        }
+        else if (input == DOWN){
+
+        }
+        else if (input == LEFT){
+
+        }
+        else if (input == RIGHT){
+
+        }
+    }
+
+    // Registers the player and saves the name
+    void askName(){
+        //clearConsole();
+        cout << "Player " << number << " whats your name?\n";
+        cin >> name;
+        cout << "Hello " << name << " welcome to Battleships!\n";
+    }
 
     // score considers win and sunken ships and hits (and total shots)
-    void score(int player) {
-    }
+    void scoring(){}
 };
 
 class Setup {
@@ -85,9 +116,9 @@ public:
     Setup() {
         playerCount = 1;
         mode = STANDARD;
-        distance = FAR;
+        distance = CLOSE;
         ship = FIVE;
-        fieldSize = 10;
+        fieldSize = 26;
         shipCount = 5;
         aiDifficulty = NORMAL;
     }
@@ -117,26 +148,69 @@ public:
         }
     }
 
-    void createShips(int total) {
-        int lengthShips[] = { 2,3,3,4,5 };
-        int shipFields = fieldSize * fieldSize * (total / 100.);
-        while (shipFields >= 2) {
-            for (int num : lengthShips) {
-                if (num > shipFields) {
-                    break;
+    void createShips() {
+        int lengthShips[] = { 5,4,3,3,2 };
+        if(!shipCount){
+            int shipFields = fieldSize * fieldSize * (ship / 100.);
+            while (shipFields >= 2) {
+                for (int num : lengthShips) {
+                    if (num > shipFields) {
+                        break;
+                    }
+                    shipFields -= num;
+                    ships.push_back(num);
                 }
-                shipFields -= num;
-                ships.push_back(num);
+            }
+        }else {
+            int temp = shipCount;
+            while (temp) {
+                for (int num : lengthShips) {
+                    if (temp) {
+                        break;
+                    }
+                    shipCount--;
+                    ships.push_back(num);
+                }
             }
         }
+        
     }
 
+    void rules() {
+        switch (mode){
+        case STANDARD:
+            cout << "Klassisches Schiffe versenken.\n"; break;
+        case SALVO:
+            cout << "Funf Schüsse gleichzeitig.\n"; break;
+        case RACE:
+            cout << "Rennen wer als erstes zum Ende kommt.\n"; break;
+        }
+        switch (distance){
+        case FAR:
+            cout << "Schiffe mussen ein Feld auseinander platziert werden.\n"; break;
+        case CLOSE:
+            cout << "Schiffe konnen direkt nebeneinander platziert werden\n"; break;
+        }
+        switch (ship){
+        case FIVE:
+            cout << "Die Anzahl der Schiffe ist gering.\n"; break;
+        case TEN:
+            cout << "Die Anzahl der Schiffe ist hoch.\n"; break;
+        }
+        switch (aiDifficulty){
+        case EASY:
+            cout << "Die KI ist auf Einfach eingestellt.\n"; break;
+        case NORMAL:
+            cout << "Die KI ist auf Normal eingestellt.\n"; break;
+        case HARD:
+            cout << "Die KI ist auf Schwer eingestellt.\n"; break;
+        }
+    }
 };
 
 //--------------------------------------GLOBAL--------------------------------------------
 
-const int num[10] = { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 };
-const string alph[27] = { " ", "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z" };
+//char alph[27] = { ' ', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'};
 stack<MenuID> menuStack;
 
 //-----------------------------------Deklaration--------------------------------------
@@ -171,10 +245,12 @@ map<MenuID, vector<pair<char, string>>> mData = {
         {'0', "Zurueck"}}},
     {MenuID::OPTIONS, {
         {'1', "Modus"},
-        {'2', "Feldgroesse"},
-        {'3', "Schiffs Anzahl"},
-        {'4', "KI Schwierigkeit"},
-        {'0', "Zurueck"}}},
+        {'2', "Feldgrosse"},
+        {'3', "Schiffs Menge (automatisch)"},
+        {'4', "Schiffs Anzahl (manuell)"},
+        {'5', "Distanz"},
+        {'6', "KI Schwierigkeit"},
+        {'0', "Zuruck"}}},
     {MenuID::MODE, {
         {'1', "Normal"},
         {'2', "Salvo"},
@@ -191,11 +267,11 @@ map<MenuID, map<char, action>> mActions = {
     {MenuID::MAIN, {
         {'1', []() {menuStack.push(MenuID::PRESETS);}},
         {'2', []() {}},
-        {'3', []() {}},
+        {'3', []() {custom.rules(); }},
         {'4', []() {menuStack.push(MenuID::OPTIONS);}},
-        {'0', []() {}}}},
+        {'0', []() {/*return*/}}}},
     {MenuID::PLAY, {
-        {'1', []() {custom.playerCount = 1; clearConsole(); cout << custom.fieldSize; for (int i : custom.ships) { cout << endl << i << endl; }}},
+        {'1', []() {custom.playerCount = 1; }},
         {'2', []() {custom.playerCount = 2; }},
         {'3', []() {custom.playerCount = 3; }},
         {'4', []() {custom.playerCount = 4; }},
@@ -208,9 +284,11 @@ map<MenuID, map<char, action>> mActions = {
         {'0', []() {goback(menuStack);}}}},
     {MenuID::OPTIONS, {
         {'1', []() {menuStack.push(MenuID::MODE); }},
-        {'2', []() {clearConsole(); cout << "Welche Seitenlaenge soll das Feld haben?" << endl;  int size; cin >> size; custom.fieldSize = size; }},
-        {'3', []() {clearConsole(); cout << "Wie viele Schiffe willst du haben?\n(Diese Einstellung überscheibt die manuelle anzahl!)" << endl;  int num; cin >> num; custom.shipCount = num; }},
-        {'4', []() {menuStack.push(MenuID::AI); }},
+        {'2', []() {clearConsole(); cout << "Welche Seitenlange soll das Feld haben?\n";  int size; cin >> size; custom.fieldSize = size; }},
+        {'3', []() {clearConsole(); cout << "Wie viele Schiffe sollen es sein?\n\t1. wenige\n\t2. viele\n"; int num = _getch(); if (0 < num < 3) { num == 1 ? custom.ship = FIVE : custom.ship = TEN; }; custom.shipCount = 0; }},
+        {'4', []() {clearConsole(); cout << "Wie viele Schiffe willst du haben?\n(Diese Einstellung uberscheibt die automatische Anzahl!)\n";  int num; cin >> num; custom.shipCount = num; }},
+        {'5', []() {clearConsole(); cout << "Welche distanz sollen die Schiffe haben?\n\t1. nah\n\t2. fern\n"; int num = _getch(); if (0 < num < 3) { num == 1 ? custom.distance = CLOSE : custom.distance = FAR; }}},
+        {'6', []() {menuStack.push(MenuID::AI); }},
         {'0', []() {goback(menuStack); }}}},
     {MenuID::MODE, {
         {'1', []() {custom.mode = NORMAL; goback(menuStack); }},
@@ -226,11 +304,17 @@ map<MenuID, map<char, action>> mActions = {
 
 //----------------------------------------MAIN--------------------------------------------------
 
+void fieldGen1(const Setup& objekt, Player& player);
+
 int main() {
     menuStack.push(MenuID::MAIN);
+    Player p1;
 
+    fieldGen1(preset, p1);
 
     while (true) {
+        
+        /*
         MenuID currentMenuID = menuStack.top();
         vector<pair<char, string>> currentMenu = mData[currentMenuID];
 
@@ -250,6 +334,7 @@ int main() {
             cout << "Falsche Eingabe" << endl;
             continue;
         }
+        */
     }
 }
 
@@ -283,6 +368,41 @@ void clearConsole() {
 }
 
 
+void fieldGen1(const Setup& settings, Player& player) {
+    int fieldSizeWithBorder = settings.fieldSize+1;
+    player.field.clear();
+    player.field.resize(fieldSizeWithBorder);
+    char character = 65;
+    for (int i = 0; i < fieldSizeWithBorder; i++) {
+        if (!i){ player.field[0].push_back(' '); }
+        player.field[0].push_back(character);
+        character++;
+    }
+    cout << endl;
+    char number = 49;
+    for (int i = 1; i < fieldSizeWithBorder; i++) {
+        if ((i-1/10) < 1){
+            player.field[i].push_back('0');
+            player.field[i].push_back(number);
+        }
+        player.field[i].push_back(number);
+        number++;
+    }
+    for (int i = 1; i < fieldSizeWithBorder; i++) {
+        for (int j = 1; j < fieldSizeWithBorder; j++) {
+            player.field[i].push_back('.');
+        }
+    }
+    
+
+
+    for (int i = 0; i < fieldSizeWithBorder; i++) {
+        for (int j = 0; j < fieldSizeWithBorder; j++) {
+            cout << player.field[i][j] << " ";
+        }
+        cout << endl;
+    }
+}   
 
 
 
@@ -290,23 +410,6 @@ void clearConsole() {
 
 
 // alt muss neugemacht werden
-
-// generiert das feld sobald spiel startet mit größe und numerierung der x und y achse
-void fieldGen(vector<vector<vector<string>>>& grid, int size, int playerCount) {
-    size++;
-    for (int i = 0; i < size; i++) {
-        grid[0][0][i] = alph[size / 26] + alph[size % 26];
-        cout << grid[0][0][i];
-    }
-    for (int k = 0; k < playerCount - 1; k++) {
-        for (int i = 1; i < size; i++) {
-            for (int j = 1; j < size; j++) {
-                cout << "k: " << k << ", i: " << i << ", j: " << j << ", value: " << grid[k][i][j] << endl; // Debugging-Ausgabe
-                grid[k][i][j] = ".";
-            }
-        }
-    }
-}
 
 // zweigt das ausgewählte spielfeld an au<s der sicht des ausführenden spielers
 void displayField(const vector<vector<vector<string>>>& grid, int player, int size) {

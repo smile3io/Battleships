@@ -1,3 +1,5 @@
 ﻿  Schiffeversenken.cpp
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Schiffeversenken\Schiffeversenken.cpp(122,24): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Schiffeversenken\Schiffeversenken.cpp(154,28): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Schiffeversenken\Schiffeversenken.cpp(288,135): warning C4804: "<": unsichere Verwendung des Typs "bool" in einer Operation
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Schiffeversenken\Schiffeversenken.cpp(290,138): warning C4804: "<": unsichere Verwendung des Typs "bool" in einer Operation
   Schiffeversenken.vcxproj -> C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\x64\Debug\Schiffeversenken.exe
