@@ -26,6 +26,7 @@ X Regeln ändern (Platz zwischen Schiffen)
 X schiffen berechnung -> (size*size)*0.17 -> anzahl an schiff feldern -> ans -
 X 2(3,3,4,5)   -> periodisch
 */
+
 //---------------------------------------ENUM--------------------------------------------------
 
 enum class GameState {
@@ -73,7 +74,7 @@ public:
     int playerCount;        //  easy    normal      hard                custom
     Settings mode;          //  normal / salvo / race?                  
     Settings distance;      //  normal ohne abstand / mit abstand
-    Settings shipSetting;          //  5 schiffe auf 10 (17 aka 0.17) / 10 auf 10 (30 aka 0.3)
+    Settings shipSetting;   //  5 schiffe auf 10 (17 aka 0.17) / 10 auf 10 (30 aka 0.3)
     int fieldSize;          //  5       10          15                  1** 2*** 1**** 1***** 17Felder / 4** 3*** 2**** 1***** 30Felder
     int shipCount;          //  2       5           12                  0,17 / 0,30
     vector<int> shipsLenght;//  2*2     2,3*2,4,5   2*4,3*4,4*2,5*2
@@ -451,7 +452,15 @@ void initGame(vector<Player>& players) {
 }
 
 // generates the field for every player 
-void genFields(const Setup& settings, Player& player) {
+/*
+void genFields(const vector<Player>& players) {
+    for (Player &player: players){
+
+    }
+}
+*/
+
+void genFields1(const Setup& settings, Player& player) {
     int fieldSize = settings.fieldSize;
     player.field.clear();
     player.field.resize(fieldSize);
@@ -471,7 +480,7 @@ void game() {
 }
 
 // 
-void loop() {
+void gameLoop() {
     //TODO: Implementiere die Spiellogik.  Dies ist das Herz des Spiels.  Es beinhaltet:
     // 1.  Den Spielern abwechselnd das Schießen zu ermöglichen.
     // 2.  Die Eingabe des Spielers zu verarbeiten (z.B. welcher Punkt beschossen wird).
@@ -516,7 +525,6 @@ void clearConsole() {
     #else
         system("clear");
     #endif
-    
 }
 
 //------------------------------------------------------------------------------------
