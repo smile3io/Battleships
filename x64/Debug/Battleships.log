@@ -1,7 +1,8 @@
 ﻿  Battleships.cpp
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(144,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(153,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(185,1): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(189,24): warning C4244: "Initialisierung": Konvertierung von "__int64" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(360,19): warning C4804: "<": unsichere Verwendung des Typs "bool" in einer Operation
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(146,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(155,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(175,36): warning C4244: "=": Konvertierung von "__int64" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(192,1): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(196,24): warning C4244: "Initialisierung": Konvertierung von "__int64" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(380,19): warning C4804: "<": unsichere Verwendung des Typs "bool" in einer Operation
   Battleships.vcxproj -> C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\x64\Debug\Battleships.exe

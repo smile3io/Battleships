@@ -53,25 +53,15 @@ enum class Settings {
 
 // . nichts  X kein Treffer  O Treffer  #  --- ||| versenkt
 
-class Ships {
-    //int player; // player number
-    int size;   // ship size
-    int x;      // position upper left
-    int y;      // position upper left
-    int dir;    // 0 horizontal  1 vertikal
-    bool isSunk = false;    // 0 no 1 yes 
-    // Füge ein, um den Zustand des Schiffs zu verfolgen.  Dies ist sehr
-    // nützlich, um später im Spiel festzustellen, wann ein Spieler
-    // alle Schiffe versenkt hat und das Spiel beendet werden kann.
-    // Man könnte auch noch ein Array oder einen Vektor von bool-Werten hinzufügen, um zu
-    // verfolgen, welche Teile des Schiffs getroffen wurden.
-};
+
 
 class Setup {
 private:
     const int lengthShipsFIVE[5] = { 2,3,3,4,5 };
     const int lengthShipsTEN[10] = { 2,2,2,2,3,3,3,4,4,5, };
 public:
+    const int lenghts[4] = { 2,3,4,5 };
+    int lenghtsCount[4];
     int playerCount;        //  easy    normal      hard                custom
     Settings mode;          //  normal / salvo / race?                  
     Settings distance;      //  normal ohne abstand / mit abstand
@@ -169,40 +159,49 @@ public:
                 }
             }
         }
+        for (int i = 0; i < 4; i++) {
+            lenghtsCount[i] = count(shipsLenght.begin(), shipsLenght.end(), i+2);
+        }
     }
     // displays the current rules
     const void displayRules() {
+        cout << "Mode: ";
         switch (mode) {
-        case Settings::STANDARD: cout << "Klassisches Schiffe versenken.\n"; break;
-        case Settings::SALVO: cout << "Funf Schusse gleichzeitig.\n"; break;
-        case Settings::RACE: cout << "Rennen wer als erstes zum Ende kommt.\n"; break;
+        case Settings::STANDARD: cout << " Classic\n"; break;
+        case Settings::SALVO: cout << " Five shots\n"; break;
+        case Settings::RACE: cout << " Race to the end\n"; break;
         }
+        cout << "Distance: ";
         switch (distance) {
-        case Settings::FAR: cout << "Schiffe mussen ein Feld auseinander platziert werden.\n"; break;
-        case Settings::CLOSE: cout << "Schiffe konnen direkt nebeneinander platziert werden\n"; break;
+        case Settings::FAR: cout << "One apart\n"; break;
+        case Settings::CLOSE: cout << "Next to another\n"; break;
         }
         int num;
         (shipCount) ? num = shipCount : num = shipsLenght.size() ;
-        cout << "Die Anzahl der Schiffe betragt " << num << "." << endl;
-        cout << "Jeder hat:\n";
+        cout << "Num of ships: " << num << endl;
+        cout << "Everone has:\n";
         for (int i = 2; i <= 5; i++) {
             int amount = count(shipsLenght.begin(), shipsLenght.end(), i);
-            cout << amount << "x" << i << "er Schiffe" << endl;
+            cout << amount << "x" << i << "er ships" << endl;
         }
         if (shipCount == 0) {
+            cout << "Ship amount: ";
             switch (shipSetting) {
-            case Settings::FIVE: cout << "Die Anzahl der Schiffe ist gering.\n"; break;
-            case Settings::TEN: cout << "Die Anzahl der Schiffe ist hoch.\n"; break;
+            case Settings::FIVE: cout << "low\n"; break;
+            case Settings::TEN: cout << "high\n"; break;
             }
         }
-        cout << "Die Feld grosse betragt " << fieldSize << "x" << fieldSize << endl;
+        cout << "Fieldsize: " << fieldSize << "x" << fieldSize << endl;
+        cout << "AI diff: ";
         switch (aiDifficulty) {
-        case Settings::EASY: cout << "Die KI ist auf Einfach eingestellt.\n"; break;
-        case Settings::NORMAL: cout << "Die KI ist auf Normal eingestellt.\n"; break;
-        case Settings::HARD: cout << "Die KI ist auf Schwer eingestellt.\n"; break;
+        case Settings::EASY: cout << "easy\n"; break;
+        case Settings::NORMAL: cout << "normal\n"; break;
+        case Settings::HARD: cout << "hard\n"; break;
         }
     }
 };
+
+Setup gameSetup;
 
 class Player {
 public:
@@ -215,19 +214,19 @@ public:
     // create the player with a number
     Player(int number) : number(number) {}
     // prints the field of the current player
-    void displayField(const Setup& settings) {
+    void displayField() {
         // x-axis
-        for (int k = 0; k < settings.fieldSize; k++) {
+        for (int k = 0; k < gameSetup.fieldSize; k++) {
             if (!k) cout << "   ";
-            k < 26 && settings.fieldSize > 26 ? cout << settings.xAxisLabel[k] << "  " : cout << settings.xAxisLabel[k] << " ";
+            k < 26 && gameSetup.fieldSize > 26 ? cout << gameSetup.xAxisLabel[k] << "  " : cout << gameSetup.xAxisLabel[k] << " ";
         }
         cout << endl;
         // y-axis
-        for (int i = 0; i < settings.fieldSize; i++) {
+        for (int i = 0; i < gameSetup.fieldSize; i++) {
             if (i + 1 < 10) cout << " ";
-            cout << settings.yAxisLabel[i] << " ";
-            for (int j = 0; j < settings.fieldSize; j++) {
-                settings.fieldSize > 26 ? cout << field[i][j] << "  " : cout << field[i][j] << " ";
+            cout << gameSetup.yAxisLabel[i] << " ";
+            for (int j = 0; j < gameSetup.fieldSize; j++) {
+                gameSetup.fieldSize > 26 ? cout << field[i][j] << "  " : cout << field[i][j] << " ";
             }
             cout << endl;
         }
@@ -259,13 +258,26 @@ public:
     }
     // score considers win and sunken ships and hits (and total shots)
     void /*update?*/scoring() {} // Diese Funktion sollte aufgerufen werden, wenn ein Spieler ein Schiff versenkt oder das Spiel gewinnt.
+
+    class Ships {
+        int size;   // ship size
+        int x;      // position upper left
+        int y;      // position upper left
+        int dir;    // 0 horizontal  1 vertikal
+        bool isSunk = false;    // 0 no 1 yes 
+        // Füge ein, um den Zustand des Schiffs zu verfolgen.  Dies ist sehr
+        // nützlich, um später im Spiel festzustellen, wann ein Spieler
+        // alle Schiffe versenkt hat und das Spiel beendet werden kann.
+        // Man könnte auch noch ein Array oder einen Vektor von bool-Werten hinzufügen, um zu
+        // verfolgen, welche Teile des Schiffs getroffen wurden.
+    };
 };
 
 
 
 //--------------------------------------GLOBAL--------------------------------------------
 
-Setup gameSetup;
+GameState state = GameState::MENU; 
 stack<MenuID> menuStack;
 
 //-----------------------------------Deklaration--------------------------------------
@@ -276,46 +288,49 @@ void clearConsole();
 void genFields(vector<Player>& players);
 void initGame(vector<Player>& players);
 
+void placeShips(vector<Player>& players);
+void select(Player& player, pair<int, int> cursor);
+
 //-------------------------------MAPS--------------------------------------------
 
 // data map for the menu text
 map<MenuID, vector<pair<char, string>>> menuData = {
     {MenuID::MAIN, {
-        {'1', "Spielen"},
-        {'2', "Rangliste"},
-        {'3', "Regeln"},
-        {'4', "Optionen"},
-        {'0', "Beenden"}}},
+        {'1', "Play"},
+        {'2', "Leaderboard"},
+        {'3', "Rules"},
+        {'4', "Options"},
+        {'0', "Close"}}},
     {MenuID::PLAY, {
-        {'1', "KI"},
-        {'2', "2 Spieler"},
-        {'3', "3 Spieler"},
-        {'4', "4 Spieler"},
-        {'0', "Zuruck"}}},
+        {'1', "AI"},
+        {'2', "2 Player"},
+        {'3', "3 Player"},
+        {'4', "4 Player"},
+        {'0', "Back"}}},
     {MenuID::PRESETS, {
-        {'1', "Klein"},
-        {'2', "Mittel"},
-        {'3', "Gross"},
-        {'4', "Benutzerdefiniert"},
-        {'0', "Zuruck"}}},
+        {'1', "Small"},
+        {'2', "Medium"},
+        {'3', "Big"},
+        {'4', "Custom"},
+        {'0', "Back"}}},
     {MenuID::OPTIONS, {
-        {'1', "Modus"},
-        {'2', "Feldgrosse"},
-        {'3', "Schiffs Menge (automatisch)"},
-        {'4', "Schiffs Anzahl (manuell)"},
-        {'5', "Distanz"},
-        {'6', "KI Schwierigkeit"},
-        {'0', "Zuruck"}}},
+        {'1', "Mode"},
+        {'2', "Fieldsize"},
+        {'3', "Ships count(automatisch)"},
+        {'4', "Ships count (manuell)"},
+        {'5', "Distance"},
+        {'6', "AI Difficulty"},
+        {'0', "Back"}}},
     {MenuID::MODE, {
         {'1', "Normal"},
         {'2', "Salvo"},
         {'3', "Race"},
-        {'0', "Zuruck"}}},
+        {'0', "Back"}}},
     {MenuID::AI, {
-        {'1', "Einfach"},
+        {'1', "Easy"},
         {'2', "Normal"},
-        {'3', "Schwer"},
-        {'0', "Zuruck"}}}
+        {'3', "Hard"},
+        {'0', "Back"}}}
 };
 
 // map for the coresponding actions for the choices in menus 
@@ -327,10 +342,10 @@ map<MenuID, map<char, function<void()>>> menuActions = {
         {'4', []() {menuStack.push(MenuID::OPTIONS); }},
         {'0', []() {/*return*/}}}},
     {MenuID::PLAY, {
-        {'1', []() {gameSetup.playerCount = 1; /* TODO: Spiel starten */}},
-        {'2', []() {gameSetup.playerCount = 2; /* TODO: Spiel starten */}},
-        {'3', []() {gameSetup.playerCount = 3; /* TODO: Spiel starten */}},
-        {'4', []() {gameSetup.playerCount = 4; /* TODO: Spiel starten */}},
+        {'1', []() {gameSetup.playerCount = 1; state = GameState::GAME_LOOP; }},
+        {'2', []() {gameSetup.playerCount = 2; state = GameState::GAME_LOOP; }},
+        {'3', []() {gameSetup.playerCount = 3; state = GameState::GAME_LOOP; }},
+        {'4', []() {gameSetup.playerCount = 4; state = GameState::GAME_LOOP; }},
         {'0', []() {goback(menuStack); }}}},
     {MenuID::PRESETS, {
         {'1', []() {gameSetup.setPreset(Settings::SMALL); menuStack.push(MenuID::PLAY); gameSetup.genShips(); }},
@@ -342,11 +357,12 @@ map<MenuID, map<char, function<void()>>> menuActions = {
         {'1', []() {menuStack.push(MenuID::MODE); }},
         {'2', []() {
             clearConsole();
-            cout << "Welche Seitenlange soll das Feld haben?\n";
+            cout << "Current: " << gameSetup.fieldSize << endl << endl;
+            cout << "How big should the field be?\n";
             int size;
             cin >> size;
             if (cin.fail()) { //Fehlerbehandlung
-                cout << "Ungültige Eingabe. Bitte eine Zahl eingeben.\n";
+                cout << "Invalid Input. Please input a number.\n";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 return;
@@ -355,7 +371,12 @@ map<MenuID, map<char, function<void()>>> menuActions = {
         }},
         {'3', []() {
             clearConsole();
-            cout << "Wie viele Schiffe sollen es sein?\n\t1. wenige\n\t2. viele\n";
+            if (gameSetup.shipSetting == Settings::TEN){
+                cout << "Current: many\n\n";
+            }else if (gameSetup.shipSetting == Settings::FIVE){
+                cout << "Current: few\n\n";
+            }
+            cout << "How many ships?\n\t1. few\n\t2. many\n";
             int num = _getch();
             if (0 < num < 3) { num == 1 ? gameSetup.shipSetting = Settings::FIVE : gameSetup.shipSetting = Settings::TEN; };
             if (num == '1') {
@@ -363,7 +384,7 @@ map<MenuID, map<char, function<void()>>> menuActions = {
             }else if (num == '2') {
                gameSetup.shipSetting = Settings::TEN;
             }else {
-               cout << "Ungültige Eingabe.\n";
+               cout << "Invalid Input.\n";
                return;
             }
             gameSetup.shipCount = 0;
@@ -371,11 +392,12 @@ map<MenuID, map<char, function<void()>>> menuActions = {
         }},
         {'4', []() {
             clearConsole();
-            cout << "Wie viele Schiffe willst du haben?\n(Diese Einstellung uberscheibt die automatische Anzahl!)\n";
+            cout << "Current: " << gameSetup.shipCount << endl << endl;
+            cout << "How many ships?\n(This setting overwrites the automatic number!)\n";
             int num;
             cin >> num;
             if (cin.fail()) { //Fehlerbehandlung
-                cout << "Ungültige Eingabe. Bitte eine Zahl eingeben.\n";
+                cout << "Invalid Input. Please input a number.\n";
                 cin.clear();
                 cin.ignore(numeric_limits<streamsize>::max(), '\n');
                 return;
@@ -385,18 +407,22 @@ map<MenuID, map<char, function<void()>>> menuActions = {
         }},
         {'5', []() {
             clearConsole();
-            cout << "Welche distanz sollen die Schiffe haben?\n\t1. nah\n\t2. fern\n";
+            if (gameSetup.shipSetting == Settings::CLOSE) {
+                cout << "Current: close\n\n";
+            }
+            else if (gameSetup.shipSetting == Settings::FAR) {
+                cout << "Current: far\n\n";
+            }
+            cout << "What distance should the ships be?\n\t1. close\n\t2. far\n";
             int num = _getch();
             if (num == '1') {
                 gameSetup.distance = Settings::CLOSE;
-            }
-        else if (num == '2') {
+            }else if (num == '2') {
            gameSetup.distance = Settings::FAR;
-        }
-        else {
-           cout << "Ungültige Eingabe.\n";
-           return;
-        }
+            }else {
+               cout << "Invalid Input.\n";
+               return;
+            }
         }},
         {'6', []() {menuStack.push(MenuID::AI); }},
         {'0', []() {goback(menuStack); }}}},
@@ -416,7 +442,6 @@ map<MenuID, map<char, function<void()>>> menuActions = {
 
 int main() {
     // starting with main menu
-    GameState state = GameState::MENU;
     menuStack.push(MenuID::MAIN);
     // saving all players
     vector<Player> players;
@@ -440,11 +465,12 @@ int main() {
             if (validInput) {
                 menuActions[currentMenuID][choice]();  // perform specific action
             }else {
-                cout << "Falsche Eingabe" << endl;
+                cout << "Wrong Input" << endl;
                 continue;
             }
         }else if (state == GameState::GAME_LOOP){
-
+            initGame(players);
+            placeShips(players);
         }else if (state == GameState::GAME_OVER){
 
         }
@@ -468,6 +494,69 @@ void initGame(vector<Player>& players) {
     // der die Interaktion mit dem Spieler und die Überprüfung der Platzierung
     // beinhaltet.
 }
+//
+void placeShips(vector<Player>& players) {
+    pair<int, int> cursor(5, 5); 
+    for (int i = 0; i < gameSetup.playerCount; i++) {
+        clearConsole();
+        cout << players[i].name << " your turn\n";
+        for (int num : gameSetup.lenghts){
+            for (int count = gameSetup.lenghtsCount[num - 2]; count > 0; count--) {
+                bool placed = false;
+                while (!placed){
+                    int input = _getch();
+                    if (input == static_cast<int> (Settings::UP)) {
+                        cursor.first--;
+                        select(players[i], cursor);
+                    }else if (input == static_cast<int> (Settings::DOWN)) {
+                        cursor.first++;
+                        select(players[i], cursor);
+                    }else if (input == static_cast<int> (Settings::LEFT)) {
+                        cursor.second--;
+                        select(players[i], cursor);
+                    }else if (input == static_cast<int> (Settings::RIGHT)) {
+                        cursor.second++;
+                        select(players[i], cursor);
+                    }else if (input == 13){
+                        placed = 1;
+                        cout << "placed " << num << " long ship\n";
+                    }
+                    
+                    
+                }
+            }
+        }
+    }
+}
+
+void select(Player& player, pair<int, int> cursor) {
+    vector<vector<char>> render;
+    render.clear();
+    render = player.field;
+    clearConsole();
+    for (int i = 0; i < gameSetup.fieldSize; i++) {
+        for (int j = 0; j < gameSetup.fieldSize; j++) {
+            if (i == cursor.first && j == cursor.second) {
+                render[i][j] = '#';
+            }
+        }
+    }
+    // x-axis
+    for (int k = 0; k < gameSetup.fieldSize; k++) {
+        if (!k) cout << "   ";
+        k < 26 && gameSetup.fieldSize > 26 ? cout << gameSetup.xAxisLabel[k] << "  " : cout << gameSetup.xAxisLabel[k] << " ";
+    }
+    cout << endl;
+    // y-axis
+    for (int i = 0; i < gameSetup.fieldSize; i++) {
+        if (i + 1 < 10) cout << " ";
+        cout << gameSetup.yAxisLabel[i] << " ";
+        for (int j = 0; j < gameSetup.fieldSize; j++) {
+            gameSetup.fieldSize > 26 ? cout << render[i][j] << "  " : cout << render[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
 
 // generates the field for every player 
 void genFields(vector<Player>& players) {
@@ -480,24 +569,8 @@ void genFields(vector<Player>& players) {
     }
 }
 
-/*
-void genFields1(const Setup& settings, Player& player) {
-    int fieldSize = settings.fieldSize;
-    player.field.clear();
-    player.field.resize(fieldSize);
-    // inserting . as place holder
-    for (int i = 0; i < fieldSize; i++) {
-        for (int j = 0; j < fieldSize; j++) {
-            player.field[i].push_back('.');
-        }
-    }
-}*/
-
 // game function
 void game() {
-    //genAxis(preset);
-    //fieldGen(preset, p1);
-    //displayField(preset, p1);
 }
 
 // 
@@ -517,6 +590,7 @@ void gameLoop() {
 
 // displays the selected option menu
 void displayMenu(const vector<pair<char, string>>& options) {
+    clearConsole();
     cout << "\n\n\n\n";
     for (auto& pair : options) {
         cout << "\t" << pair.first << ". " << pair.second << endl;
@@ -538,10 +612,10 @@ MenuID goback(stack<MenuID>& stack) {
 // clears the console with a command
 void clearConsole() {
     #ifdef _WIN32
-        //system("cls");
-        for (int i = 0; i < 30; i++) {
-            cout << endl;
-        }
+        system("cls");
+        //for (int i = 0; i < 30; i++) {
+        //    cout << endl;
+        //}
     #else
         system("clear");
     #endif
