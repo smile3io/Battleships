@@ -6,6 +6,9 @@
 #include <stack>
 #include <functional>
 #include <limits> // for numeric_limits cin
+//#include <sqlite3.h>
+//#include <optional> // optional parameter or return value
+//#include <utility> // Für std::pair
 
 using namespace std;
 
@@ -289,7 +292,7 @@ void genFields(vector<Player>& players);
 void initGame(vector<Player>& players);
 
 void placeShips(vector<Player>& players);
-void select(Player& player, pair<int, int> cursor);
+void select(Player& player, pair<int, int> cursor, int size);
 
 //-------------------------------MAPS--------------------------------------------
 
@@ -445,7 +448,6 @@ int main() {
     menuStack.push(MenuID::MAIN);
     // saving all players
     vector<Player> players;
-
     
     while (true) {
         if (state == GameState::MENU) {
@@ -495,45 +497,58 @@ void initGame(vector<Player>& players) {
     // beinhaltet.
 }
 //
-void placeShips(vector<Player>& players) {
-    pair<int, int> cursor(5, 5); 
+void placeShips(vector<Player>& players) { 
+    pair<int, int> cursor(gameSetup.fieldSize / 2, gameSetup.fieldSize / 2);
     for (int i = 0; i < gameSetup.playerCount; i++) {
         clearConsole();
         cout << players[i].name << " your turn\n";
         for (int num : gameSetup.lenghts){
             for (int count = gameSetup.lenghtsCount[num - 2]; count > 0; count--) {
+                bool selected = false;
                 bool placed = false;
-                while (!placed){
-                    int input = _getch();
-                    if (input == static_cast<int> (Settings::UP)) {
-                        cursor.first--;
-                        select(players[i], cursor);
-                    }else if (input == static_cast<int> (Settings::DOWN)) {
-                        cursor.first++;
-                        select(players[i], cursor);
-                    }else if (input == static_cast<int> (Settings::LEFT)) {
-                        cursor.second--;
-                        select(players[i], cursor);
-                    }else if (input == static_cast<int> (Settings::RIGHT)) {
-                        cursor.second++;
-                        select(players[i], cursor);
-                    }else if (input == 13){
-                        placed = 1;
-                        cout << "placed " << num << " long ship\n";
+                while (!selected){
+                    if (1 < cursor.first < gameSetup.fieldSize && 1 < cursor.second < gameSetup.fieldSize){
+                        int input = _getch();
+                        if (input == static_cast<int> (Settings::UP)) {
+                            cursor.first--;
+                            select(players[i], cursor, num);
+                        }else if (input == static_cast<int> (Settings::DOWN)) {
+                            cursor.first++;
+                            select(players[i], cursor, num);
+                        }else if (input == static_cast<int> (Settings::LEFT)) {
+                            cursor.second--;
+                            select(players[i], cursor, num);
+                        }else if (input == static_cast<int> (Settings::RIGHT)) {
+                            cursor.second++;
+                            select(players[i], cursor, num);
+                        }else if (input == 13/*ENTER*/) {
+                            selected = 1;
+                            cout << "Choose a direction [h] = horizontal [v] = vertical\n";
+                            while (!placed){
+                                int dir = _getch();
+                                if (dir == 118/*v*/ || dir == 86/*V*/){
+                                    cout << "Placed a " << num << " long ship verticaly\n";
+                                    placed = 1;
+                                }else if (dir == 104/*h*/ || dir == 72/*H*/) {
+                                    cout << "Placed a " << num << " long ship horizontaly\n";
+                                    placed = 1;
+                                }
+                            }
+                        }
                     }
-                    
-                    
                 }
             }
         }
     }
 }
 
-void select(Player& player, pair<int, int> cursor) {
+void select(Player& player, pair<int, int> cursor, int size) {
     vector<vector<char>> render;
     render.clear();
     render = player.field;
     clearConsole();
+    cout << "Placing a " << size << " long ship\n";
+    // displaying cursor
     for (int i = 0; i < gameSetup.fieldSize; i++) {
         for (int j = 0; j < gameSetup.fieldSize; j++) {
             if (i == cursor.first && j == cursor.second) {
@@ -557,6 +572,10 @@ void select(Player& player, pair<int, int> cursor) {
         cout << endl;
     }
 }
+/*
+void render(pair<int, int> cursor, Player& player) {
+
+}*/
 
 // generates the field for every player 
 void genFields(vector<Player>& players) {
