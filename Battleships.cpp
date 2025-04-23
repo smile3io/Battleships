@@ -7,8 +7,8 @@
 #include <functional>
 #include <limits> // for numeric_limits cin
 //#include <sqlite3.h>
-//#include <optional> // optional parameter or return value
-//#include <utility> // Für std::pair
+#include <optional> // optional parameter or return value
+#include <utility> // Für std::pair
 
 using namespace std;
 
@@ -566,14 +566,12 @@ void select(Player& player, pair<int, int> cursor, int size) {
     for (int i = 0; i < gameSetup.fieldSize; i++) {
         if (i + 1 < 10) cout << " ";
         cout << gameSetup.yAxisLabel[i] << " ";
-        for (int j = 0; j < gameSetup.fieldSize; j++) {
-            gameSetup.fieldSize > 26 ? cout << render[i][j] << "  " : cout << render[i][j] << " ";
-        }
+        for (int j = 0; j < gameSetup.fieldSize; j++) gameSetup.fieldSize > 26 ? cout << render[i][j] << "  " : cout << render[i][j] << " ";
         cout << endl;
     }
 }
 /*
-void render(pair<int, int> cursor, Player& player) {
+void render(optional<pair<int, int>> cursor, Player& player) {
 
 }*/
 
