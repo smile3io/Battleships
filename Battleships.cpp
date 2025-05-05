@@ -6,8 +6,6 @@
 #include <stack>
 #include <functional>
 #include <limits> // for numeric_limits cin
-//#include <sqlite3.h>
-#include <optional> // optional parameter or return value
 #include <utility> // Für std::pair
 
 using namespace std;
@@ -47,16 +45,15 @@ enum class Settings {
     FAR, CLOSE,             // dist
     FIVE = 17, TEN = 30,    // ship
     UP = 72, DOWN = 80,     // arrow
-    LEFT = 75, RIGHT = 77   // arrow
+    LEFT = 75, RIGHT = 77,  // arrow
+    ROTATE = 114            // rotate R
 };
 
 //---------------------------------------Struct------------------------------------------------
 
 //--------------------------------------KLASSEN----------------------------------------------
 
-// . nichts  X kein Treffer  O Treffer  #  --- ||| versenkt
-
-
+// . nichts  * Schiff  X kein Treffer  O Treffer  # Cursor  | = 124  – = 150  — = 151 versenkt
 
 class Setup {
 private:
@@ -211,7 +208,9 @@ public:
     int number;         // player number
     string name;        // player name
     int score = 0;      // session score calc -> win, ships sunken points
-    vector<vector<char>> field; // own player field // Das Spielfeld des Spielers.  Hier ist ein 'char' sinnvoll, um verschiedene Zustände des Feldes darzustellen (z.B. '.', 'O', 'X', '#').
+    vector<vector<char>> field; // own player field (z.B. '.', 'O', 'X', '#')
+    vector<vector<char>> ships;
+    vector<vector<char>> shots;
     int shotsFired = 0;     // shot count // Dies hilft, die Effizienz des Spielers zu bewerten (Verhältnis von Treffern zu Schüssen).
 
     // create the player with a number
@@ -276,8 +275,6 @@ public:
     };
 };
 
-
-
 //--------------------------------------GLOBAL--------------------------------------------
 
 GameState state = GameState::MENU; 
@@ -293,6 +290,9 @@ void initGame(vector<Player>& players);
 
 void placeShips(vector<Player>& players);
 void select(Player& player, pair<int, int> cursor, int size);
+
+void placing(vector<Player>& players);
+void render(Player& player, pair<bool, pair<int, int>> cursor = { false, {0,0} }, int size = 0, int rotation = 0);
 
 //-------------------------------MAPS--------------------------------------------
 
@@ -448,7 +448,7 @@ int main() {
     menuStack.push(MenuID::MAIN);
     // saving all players
     vector<Player> players;
-    
+
     while (true) {
         if (state == GameState::MENU) {
             MenuID currentMenuID = menuStack.top();
@@ -472,7 +472,7 @@ int main() {
             }
         }else if (state == GameState::GAME_LOOP){
             initGame(players);
-            placeShips(players);
+            placing(players);
         }else if (state == GameState::GAME_OVER){
 
         }
@@ -496,7 +496,7 @@ void initGame(vector<Player>& players) {
     // der die Interaktion mit dem Spieler und die Überprüfung der Platzierung
     // beinhaltet.
 }
-//
+/*
 void placeShips(vector<Player>& players) { 
     pair<int, int> cursor(gameSetup.fieldSize / 2, gameSetup.fieldSize / 2);
     for (int i = 0; i < gameSetup.playerCount; i++) {
@@ -521,15 +521,15 @@ void placeShips(vector<Player>& players) {
                         }else if (input == static_cast<int> (Settings::RIGHT)) {
                             cursor.second++;
                             select(players[i], cursor, num);
-                        }else if (input == 13/*ENTER*/) {
+                        }else if (input == 13) {
                             selected = 1;
                             cout << "Choose a direction [h] = horizontal [v] = vertical\n";
                             while (!placed){
                                 int dir = _getch();
-                                if (dir == 118/*v*/ || dir == 86/*V*/){
+                                if (dir == 118 || dir == 86){
                                     cout << "Placed a " << num << " long ship verticaly\n";
                                     placed = 1;
-                                }else if (dir == 104/*h*/ || dir == 72/*H*/) {
+                                }else if (dir == 104 || dir == 72) {
                                     cout << "Placed a " << num << " long ship horizontaly\n";
                                     placed = 1;
                                 }
@@ -541,7 +541,6 @@ void placeShips(vector<Player>& players) {
         }
     }
 }
-
 void select(Player& player, pair<int, int> cursor, int size) {
     vector<vector<char>> render;
     render.clear();
@@ -549,13 +548,7 @@ void select(Player& player, pair<int, int> cursor, int size) {
     clearConsole();
     cout << "Placing a " << size << " long ship\n";
     // displaying cursor
-    for (int i = 0; i < gameSetup.fieldSize; i++) {
-        for (int j = 0; j < gameSetup.fieldSize; j++) {
-            if (i == cursor.first && j == cursor.second) {
-                render[i][j] = '#';
-            }
-        }
-    }
+    render[cursor.first][cursor.second] = '#';
     // x-axis
     for (int k = 0; k < gameSetup.fieldSize; k++) {
         if (!k) cout << "   ";
@@ -570,10 +563,120 @@ void select(Player& player, pair<int, int> cursor, int size) {
         cout << endl;
     }
 }
-/*
-void render(optional<pair<int, int>> cursor, Player& player) {
+*/
+void placing(vector<Player>& players) {
+    pair<bool, pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
+    for (int i = 0; i < gameSetup.playerCount; i++) {
+        clearConsole();
+        cout << players[i].name << " your turn\n";
+        render(players[i]);
+        for (int num : gameSetup.lenghts) {
+            for (int count = gameSetup.lenghtsCount[num - 2]; count > 0; count--) {
+                bool placed = false;
+                bool valid = true;
+                int direction = 1;
+                while (!placed) {
+                    render(players[i], cursor, num, direction);
+                    int row = cursor.second.first;
+                    int col = cursor.second.second;
+                    int input = _getch();
+                    if (input == static_cast<int> (Settings::UP) && row > 0) {
+                        cursor.second.first--;
+                    }else if (input == static_cast<int> (Settings::DOWN) && ((direction == 1) ? row + num < gameSetup.fieldSize : 0)) {
+                        cursor.second.first++;
+                    }else if (input == static_cast<int> (Settings::LEFT) && col > 0) {
+                        cursor.second.second--;
+                    }else if (input == static_cast<int> (Settings::RIGHT) && ((direction == 1) ? col + num < gameSetup.fieldSize : 0)) {
+                        cursor.second.second++;
+                    }else if (input == static_cast<int> (Settings::ROTATE)) {
+                        direction = (direction == 1) ? 2 : 1;
+                    }else if (input == 13/*ENTER*/) {
+                        if (direction == 1) {   // vertical
+                            if (row + num > gameSetup.fieldSize) {
+                                valid = false;  // outside of field
+                            }
+                            else {
+                                for (int i = 0; i < num; i++) {
+                                    if (players[i].field[row + i][col] != '.') {
+                                        valid = false;  // already a ship
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        else if (direction == 2) {  // horizontal
+                            if (cursor.second.second + num > gameSetup.fieldSize) {
+                                valid = false;  // outside of field
+                            }
+                            else {
+                                for (int i = 0; i < num; i++) {
+                                    if (players[i].field[row][col + i] != '.') {
+                                        valid = false;  // already a ship
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+                        if (valid){ 
+                            if (direction == 1) {   // 
+                                for (int i = 0; i < num; i++) {
+                                    players[i].field[cursor.second.first][cursor.second.second + i] = '*';
+                                }
+                            }
+                            else if (direction == 2) {
+                                for (int i = 0; i < num; i++) {
+                                    players[i].field[cursor.second.first + i][cursor.second.second] = '*';
+                                }
+                            }
+                            placed = true;
+                        }
+                    }
+                    
+                }
+            }
+        }
+    }
+}
 
-}*/
+void render(Player& player, pair<bool, pair<int, int>> cursor, int size, int rotation) {
+    vector<vector<char>> renderField = player.field;
+
+    if (cursor.first && size > 0){
+        int row = cursor.second.first;
+        int col = cursor.second.second;
+
+        if (rotation == 1){
+            for (int i = 0; i < size; i++){
+                renderField[row + i][col] = '#';
+            }
+        }else if (rotation == 2){
+            for (int i = 0; i < size; i++) {
+                renderField[row][col + i] = '#';
+            }
+        }
+    }else if (cursor.first/*&& !size*/) {
+        int row = cursor.second.first;
+        int col = cursor.second.second;
+
+        if (row >= 0 && row < gameSetup.fieldSize && col >= 0 && col < gameSetup.fieldSize) {
+            renderField[row][col] = '#';
+        }
+    }
+
+    // x-axis
+    for (int k = 0; k < gameSetup.fieldSize; k++) {
+        if (!k) cout << "   ";
+        k < 26 && gameSetup.fieldSize > 26 ? cout << gameSetup.xAxisLabel[k] << "  " : cout << gameSetup.xAxisLabel[k] << " ";
+    }
+    cout << endl;
+    // y-axis
+    for (int i = 0; i < gameSetup.fieldSize; i++) {
+        if (i + 1 < 10) cout << " ";
+        cout << gameSetup.yAxisLabel[i] << " ";
+        for (int j = 0; j < gameSetup.fieldSize; j++) gameSetup.fieldSize > 26 ? cout << renderField[i][j] << "  " : cout << renderField[i][j] << " ";
+        cout << endl;
+    }
+}
 
 // generates the field for every player 
 void genFields(vector<Player>& players) {
