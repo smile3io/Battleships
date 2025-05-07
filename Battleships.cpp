@@ -53,7 +53,7 @@ enum class Settings {
 
 //--------------------------------------KLASSEN----------------------------------------------
 
-// . nichts  * Schiff  X kein Treffer  O Treffer  # Cursor  | = 124  – = 150  — = 151 versenkt
+// . ~ nichts  * Schiff  O kein Treffer  X Treffer  # Cursor  | = 124  – = 150  — = 151 versenkt
 
 class Setup {
 private:
@@ -287,9 +287,6 @@ MenuID goback(stack<MenuID>& stack);
 void clearConsole();
 void genFields(vector<Player>& players);
 void initGame(vector<Player>& players);
-
-void placeShips(vector<Player>& players);
-void select(Player& player, pair<int, int> cursor, int size);
 
 void placing(vector<Player>& players);
 void render(Player& player, pair<bool, pair<int, int>> cursor = { false, {0,0} }, int size = 0, int rotation = 0);
@@ -573,59 +570,51 @@ void placing(vector<Player>& players) {
         for (int num : gameSetup.lenghts) {
             for (int count = gameSetup.lenghtsCount[num - 2]; count > 0; count--) {
                 bool placed = false;
-                bool valid = true;
                 int direction = 1;
                 while (!placed) {
+                    clearConsole();
                     render(players[i], cursor, num, direction);
                     int row = cursor.second.first;
                     int col = cursor.second.second;
                     int input = _getch();
                     if (input == static_cast<int> (Settings::UP) && row > 0) {
                         cursor.second.first--;
-                    }else if (input == static_cast<int> (Settings::DOWN) && ((direction == 1) ? row + num < gameSetup.fieldSize : 0)) {
+                    }else if (input == static_cast<int> (Settings::DOWN) && ((direction == 1) ? row + num < gameSetup.fieldSize : 1)) {
                         cursor.second.first++;
                     }else if (input == static_cast<int> (Settings::LEFT) && col > 0) {
                         cursor.second.second--;
-                    }else if (input == static_cast<int> (Settings::RIGHT) && ((direction == 1) ? col + num < gameSetup.fieldSize : 0)) {
+                    }else if (input == static_cast<int> (Settings::RIGHT) && ((direction == 2) ? col + num < gameSetup.fieldSize : 1)) {
                         cursor.second.second++;
-                    }else if (input == static_cast<int> (Settings::ROTATE)) {
+                    }else if (input == static_cast<int> (Settings::ROTATE) && row + num <= gameSetup.fieldSize && col + num <= gameSetup.fieldSize) {
                         direction = (direction == 1) ? 2 : 1;
-                    }else if (input == 13/*ENTER*/) {
-                        if (direction == 1) {   // vertical
-                            if (row + num > gameSetup.fieldSize) {
-                                valid = false;  // outside of field
+                    }else if (input == 13/*ENTER*/) {   // placing ships
+                        bool valid = true;
+                        if (direction == 1) {   // horizontal
+                            for (int j = 0; j < num; j++) {
+                                if (players[i].ships[row][col + j] != '*') {
+                                    valid = false;  // already a ship
+                                    break;
+                                }
                             }
-                            else {
-                                for (int i = 0; i < num; i++) {
-                                    if (players[i].field[row + i][col] != '.') {
-                                        valid = false;  // already a ship
-                                        break;
-                                    }
+                        }else if (direction == 2) {  // vertical
+                            for (int j = 0; j < num; j++) {
+                                if (players[i].ships[row + j][col] != '*') {
+                                    valid = false;  // already a ship
+                                    break;
                                 }
                             }
                         }
-                        else if (direction == 2) {  // horizontal
-                            if (cursor.second.second + num > gameSetup.fieldSize) {
-                                valid = false;  // outside of field
-                            }
-                            else {
-                                for (int i = 0; i < num; i++) {
-                                    if (players[i].field[row][col + i] != '.') {
-                                        valid = false;  // already a ship
-                                        break;
-                                    }
-                                }
-                            }
+                        if (valid && gameSetup.distance == Settings::FAR){
+
                         }
                         if (valid){ 
                             if (direction == 1) {   // 
-                                for (int i = 0; i < num; i++) {
-                                    players[i].field[cursor.second.first][cursor.second.second + i] = '*';
+                                for (int j = 0; j < num; j++) {
+                                    players[i].ships[row][col + j] = '*';
                                 }
-                            }
-                            else if (direction == 2) {
-                                for (int i = 0; i < num; i++) {
-                                    players[i].field[cursor.second.first + i][cursor.second.second] = '*';
+                            }else if (direction == 2) {
+                                for (int j = 0; j < num; j++) {
+                                    players[i].ships[row + j][col] = '*';
                                 }
                             }
                             placed = true;
@@ -684,7 +673,17 @@ void genFields(vector<Player>& players) {
         player.field.clear();
         player.field.resize(gameSetup.fieldSize);
         for (int i = 0; i < gameSetup.fieldSize; ++i) {
-            player.field[i].resize(gameSetup.fieldSize, '.');   // inserting . as place holder
+            player.field[i].resize(gameSetup.fieldSize, '~');   // inserting . as place holder
+        }
+        player.ships.clear();
+        player.ships.resize(gameSetup.fieldSize);
+        for (int i = 0; i < gameSetup.fieldSize; ++i) {
+            player.field[i].resize(gameSetup.fieldSize, ' ');   // inserting " " as place holder
+        }
+        player.shots.clear();
+        player.shots.resize(gameSetup.fieldSize);
+        for (int i = 0; i < gameSetup.fieldSize; ++i) {
+            player.field[i].resize(gameSetup.fieldSize, ' ');   // inserting " " as place holder
         }
     }
 }
