@@ -13,6 +13,7 @@ using namespace console_utils;
 
 
 void titleBox();
+void currentControlls(int UI);
 
 //---------------------------------------ENUM--------------------------------------------------
 
@@ -35,6 +36,10 @@ enum class Settings {
     ROTATE = 114, ENTER = 13,// rotate R  ENTER 
     HOR = 0, VER = 1,       // rotation
     SHIPS, SHOTS, ALL       // render 
+};
+
+enum CONTROLLS {
+    MENU, NAME, FIELDSIZE, SHIPCOUNT, PLACING, SHOOTING
 };
 
 enum CellState {
@@ -318,12 +323,15 @@ public:
     // Registers the player and saves the name
     void askName() {
         titleBox();
+        currentControlls(NAME);
+        showCursor();
         cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
         std::cout << "Player " << number << " whats your name?\n";
         cursorPosition(consoleHeight * 0.45 + 2, consoleWidth * 0.25);
         std::cin >> name;
         cursorPosition(consoleHeight * 0.45 + 4, consoleWidth * 0.25);
         std::cout << "Hello " << name << " welcome to Battleships!\n";
+        hideCursor();
         Sleep(sleepTime);
     }
     // score considers win and sunken ships and hits (and total shots)
@@ -363,11 +371,15 @@ void genFields(std::vector<Player>& players);
 void initGame(std::vector<Player>& players);
 
 void placing(std::vector<Player>& players);
-void render(Player& player, Settings setting = Settings::ALL, std::pair<bool, std::pair<int, int>> cursor = { false, {0,0} }, int size = 0, Settings rotation = Settings::HOR);
+void render(Player& player, Settings setting = Settings::ALL, int UI = 0, std::pair<bool, std::pair<int, int>> cursor = { false, {0,0} }, int size = 0, Settings rotation = Settings::HOR);
 
 void gameLoop(std::vector<Player>& players);
-
 void titleBox();
+
+void currentControlls(int UI);
+
+void fieldBox(int x, int y, Player* p);
+void printField(std::vector<std::vector<char>> field);
 
 //-------------------------------MAPS--------------------------------------------
 
@@ -434,23 +446,29 @@ std::map<MenuID, std::map<char, std::function<void()>>> menuActions = {
     {MenuID::OPTIONS, {
         {'1', []() {menuStack.push(MenuID::MODE); }},
         {'2', []() {
-            cursorPosition(consoleHeight * 0.7, consoleWidth * 0.25);
+            currentControlls(FIELDSIZE);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             std::cout << "Current: " << gameSetup.fieldSize << std::endl << std::endl;
             cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "How big should the field be?" << std::endl;
             cursorHorizontalAbsolute(consoleWidth * 0.25);
+            showCursor();
             int size;
             std::cin >> size;
             if (std::cin.fail()) { //Fehlerbehandlung
+                cursorHorizontalAbsolute(consoleWidth * 0.25);
                 std::cout << "Invalid Input. Please input a number.";
                 Sleep(sleepTime);
                 std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                hideCursor();
                 return;
             }
+            hideCursor();
             gameSetup.fieldSize = size;
         }},
         {'3', []() {
-            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::TEN){
                 std::cout << "Current: many" << std::endl << std::endl;
             }else if (gameSetup.shipSetting == Settings::FIVE){
@@ -478,24 +496,29 @@ std::map<MenuID, std::map<char, std::function<void()>>> menuActions = {
             gameSetup.genShips();
         }},
         {'4', []() {
-            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
+            currentControlls(SHIPCOUNT);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             std::cout << "Current: " << gameSetup.shipCount << std::endl << std::endl;
             cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "How many ships?\t(This setting overwrites the automatic number!)\n";
             cursorHorizontalAbsolute(consoleWidth * 0.25);
+            showCursor();
             int num;
             std::cin >> num;
             if (std::cin.fail()) { //Fehlerbehandlung
                 std::cout << "Invalid Input. Please input a number.\n";
                 Sleep(sleepTime);
                 std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                hideCursor();
                 return;
             }
+            hideCursor();
             gameSetup.shipCount = num;
             gameSetup.genShips();
         }},
         {'5', []() {
-            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::CLOSE) {
                 std::cout << "Current: close\n\n";
             }
@@ -567,13 +590,13 @@ int main() {
             if (validInput) {
                 menuActions[currentMenuID][choice]();  // perform specific action
             }else {
+                cursorPosition(consoleHeight * 0.7, consoleWidth * 0.25);
                 std::cout << "Wrong Input" << std::endl;
                 Sleep(sleepTime);
                 continue;
             }
         }else if (state == GameState::GAME_LOOP){
             initGame(players);
-            //render(players[2], Settings::ALL);
             placing(players);
             gameLoop(players);
         }else if (state == GameState::GAME_OVER){
@@ -663,16 +686,17 @@ void debugShips(std::vector<Player>& players)  {
 
 void placing(std::vector<Player>& players) {
     for (int i = 0; i < gameSetup.playerCount; i++) {
-        clearConsole();
+        titleBox();
+        cursorPosition(consoleHeight * 0.3, consoleWidth * 0.2);
         std::cout << players[i].name << ", your turn\n";
         // cursor start position in center of field
         std::pair<bool, std::pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
         for (int lenght : gameSetup.lenghts) {
             for (int count = gameSetup.lenghtsCount[lenght - 2]; count > 0; count--) {
                 bool placed = false;
-                Settings direction = Settings::HOR;  // 0 = horizontal  1 = vertical
+                Settings direction = Settings::HOR;  
                 while (!placed) {
-                    render(players[i], Settings::SHIPS, cursor, lenght, direction);
+                    render(players[i], Settings::SHIPS, PLACING, cursor, lenght, direction);
                     int col = cursor.second.first;  // vertical
                     int row = cursor.second.second; // horizontal
                     int size = gameSetup.fieldSize;
@@ -742,7 +766,12 @@ void placing(std::vector<Player>& players) {
     }
 }
 
-void render(Player& player, Settings setting, std::pair<bool, std::pair<int, int>> cursor, int size, Settings rotation) {
+void newRender() {
+    // overworked render fuction that saves on runtime and loops 
+}
+
+
+void render(Player& player, Settings setting, int UI, std::pair<bool, std::pair<int, int>> cursor, int size, Settings rotation) {
     std::vector<std::vector<char>> renderField = player.field;
 
     int col = cursor.second.first;
@@ -794,15 +823,52 @@ void render(Player& player, Settings setting, std::pair<bool, std::pair<int, int
         renderField[col][row] = '#';    // cursor
     }
 
-    clearConsole();
-
+    titleBox();
+    currentControlls(PLACING);
+    cursorPosition(consoleHeight * 0.35, consoleWidth * 0.2);
     if (size > 0) {
-        std::cout << player.name << " your turn\n";
+        std::cout << player.name << " your turn\n\n";
+        cursorHorizontalAbsolute(consoleWidth * 0.2);
         std::cout << "Placing a " << size << " long ship (" << (rotation == Settings::HOR ? "horizontal" : "vertical") << ")\n";
     }
     else {
         std::cout << player.name << " take your shot\n";
     }
+
+    // printing different UI's
+    if (UI == PLACE) {
+        int fieldHeight = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
+        int fieldWidth = (consoleWidth + 2 - fieldDisplayWidth) / 2 + 1;
+        cursorPosition(fieldHeight, fieldWidth);
+        printField(renderField);
+        fieldBox(fieldHeight, fieldWidth, &player);
+        cursorPosition(consoleHeight + 2, 1);
+    }
+    else if (UI == SHOOT) {
+        int fieldHeight = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
+        int fieldWidth = (consoleWidth + 2 - fieldDisplayWidth) / 3 + 1;
+        cursorPosition(fieldHeight, fieldWidth);
+
+        printField(renderField);
+        fieldBox(fieldHeight, fieldWidth, &player);
+        cursorPosition(fieldHeight, 2 * fieldWidth);
+        printField(renderField);
+        fieldBox(fieldHeight, 2 * fieldWidth, &player);
+        cursorPosition(consoleHeight + 2, 1);
+    }
+    else if (UI == MULTI) {
+        for (int i = 1; i <= gameSetup.playerCount; i++)
+        {
+            int fieldY = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
+            int fieldX = ((consoleWidth + 2 - fieldDisplayWidth) * (i / (gameSetup.playerCount + 1.))) + 1;
+            cursorPosition(fieldY, fieldX);
+            printField(renderField);
+            fieldBox(fieldY, fieldX, &player);
+        }
+    }
+}
+
+void printField(std::vector<std::vector<char>> field) {
     // x-axis
     std::cout << "   ";
     for (int k = 0; k < gameSetup.fieldSize; k++) {
@@ -813,8 +879,31 @@ void render(Player& player, Settings setting, std::pair<bool, std::pair<int, int
     for (int i = 0; i < gameSetup.fieldSize; i++) {
         if (gameSetup.yAxisLabel[i] < 10) std::cout << " ";
         std::cout << gameSetup.yAxisLabel[i] << " ";
-        for (int j = 0; j < gameSetup.fieldSize; j++) std::cout << renderField[i][j] << (gameSetup.fieldSize > 26 ? "  " : " ");
-        std::cout << std::endl;
+        for (int j = 0; j < gameSetup.fieldSize; j++) {
+            switch (field[i][j])
+            {
+            case '~':
+                backgroundColor(21);
+                break;
+            case 'O':
+                backgroundColor(255);
+                break;
+            case 'X':
+                backgroundColor(196);
+                break;
+            case '*':
+                backgroundColor(245);
+                break;
+            default:
+                resetBackgroundColor();
+                break;
+            }
+            std::cout << field[i][j] << (gameSetup.fieldSize > 26 ? "  " : " ");
+            resetBackgroundColor();
+        }
+        cursorBack(fieldDisplayWidth * 2);
+        cursorDown();
+        cursorHorizontalAbsolute((consoleWidth + 2 - fieldDisplayWidth) / 2 + 1);
     }
 }
 
@@ -850,7 +939,7 @@ void gameLoop(std::vector<Player>& players) {
     bool gameWon = false;
     while (!gameWon) {
         if (gameSetup.playerCount == 1) {
-            render(players[2], Settings::SHOTS, cursor);
+            render(players[2], Settings::SHOTS, SHOOTING, cursor);
             int col = cursor.second.first;  // vertical
             int row = cursor.second.second; // horizontal
             int input = _getch();
@@ -880,7 +969,7 @@ void gameLoop(std::vector<Player>& players) {
             }
         }else{
             for (int i = 0; i < gameSetup.playerCount; i++) {
-                render(players[i], Settings::SHOTS, cursor);
+                render(players[i], Settings::SHOTS, SHOOTING, cursor);
                 int col = cursor.second.first;  // vertical
                 int row = cursor.second.second; // horizontal
                 int input = _getch();
@@ -932,6 +1021,7 @@ void displayMenu(const std::vector<std::pair<char, std::string>>& options) {
         std::cout << "[" << pair.first << "]  " << pair.second << std::endl;
         cursorHorizontalAbsolute(consoleWidth * 0.25);
     }
+    currentControlls(MENU);
 }
 
 // go one menu back (pop top menu from stack)
@@ -955,7 +1045,7 @@ void clearConsole() {
     #endif
 }
 
-//------------------------------------------------------------------------------------
+//-------------------------------------CONSOLE-----------------------------------------------
 
 void titleBox() {
     // clear screen
@@ -974,21 +1064,39 @@ void titleBox() {
     for (int i = 0; i < consoleHeight - 2; i++) { cursorHorizontalAbsolute(consoleWidth); std::cout << "|\n"; }
 }
 
-void currentControlls() {
+void currentControlls(int UI) {
 
     // String operation add to string
     //      or
     // pre plan for each UI
 
-    int width, height;
-    getConsoleSize(width, height);
-    cursorPosition(height - 2, 3);
+    cursorPosition(consoleHeight - 2, 3);
     std::cout << "CONTROLLS:\n";
     cursorHorizontalAbsolute(3);
-    std::cout << "ENTER - change Display | ESC - go back | ARROWS - move";
+    switch (UI)
+    {
+    case 0: // MENU
+        std::cout << "0-9 - choose option | ESC - go back";
+        break;
+    case 1: // NAME
+        std::cout << "A-Z - write name | ESC - go back";
+        break;
+    case 2: // FIELDSIZE
+        std::cout << "0-50 - choose option | ESC - go back";    // change max fieldsize by testing
+        break;
+    case 3: // SHIPCOUNT
+        std::cout << "NUMBER - choose option | ESC - go back";    // change max fieldsize by testing
+        break;
+    case 4: // PLACING
+        std::cout << "ARROWS - move arround | ENTER - place ship | ESC - go back";
+        break;
+    case 5: // SHOOTING
+        std::cout << "ARROWS - move arround | ENTER - shoot | ESC - go back";
+        break;
+    default:
+        break;
+    }
 }
-
-/*
 
 void fieldBox(int x, int y, Player* p) {
     // title or who's board 
@@ -1017,7 +1125,7 @@ void fieldBox(int x, int y, Player* p) {
     std::cout.flush();
 
 }
-
+/*
 void displayField(int size) {
     size++;
     for (int i = 0; i < size; i++) {

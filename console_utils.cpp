@@ -34,8 +34,8 @@ namespace console_utils {
 		HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 		if (hConsole == INVALID_HANDLE_VALUE) return false;
 		// Ensure minimum size (Windows imposes limits)
-		width = max(width, 20); // Arbitrary minimum columns
-		height = max(height, 8); // Arbitrary minimum rows
+		width = std::max(width, 20); // Arbitrary minimum columns
+		height = std::max(height, 8); // Arbitrary minimum rows
 		// Set screen buffer size (must be at least window size)
 		COORD bufferSize = { static_cast<SHORT>(width), static_cast<SHORT>(height) };
 		if (!SetConsoleScreenBufferSize(hConsole, bufferSize)) {

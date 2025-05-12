@@ -1,6 +1,8 @@
 ﻿#ifndef CONSOLE_UTILS_H
 #define CONSOLE_UTILS_H
 
+#define NOMINMAX
+
 #include <iostream>
 #include <string>
 #include <utility> // for std::pair
