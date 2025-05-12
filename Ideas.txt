@@ -1,0 +1,198 @@
+﻿
+
+- zwei windows für jeden eins
+- leaderboard kann auf zb sql oder exel oder sheets datei zugreifen und diese umschreiben bzw lesen und dieses dann ausgeben
+- Salvo mode 5 shots at once
+- uboot -> kann mit anderem schiff überlappen oder kann nach treffer
+- unterwasser gehen oder position ändern Leaderboard KI Schwierigkeiten
+X Feldgrößen - Schiffs anzahl
+- Mehrspieler zB 2-4
+- Schiffe automatisch plazieren
+X Regeln ändern (Platz zwischen Schiffen)
+- Unterschiedliche Schiffs größen  2345(6789)->wenn map größer als 10
+- für jedes schiff eine fähigkeit
+- (Abilities wie "Sonar"->deckt fläche auf, Unterwasser Minen -> sagen dass
+- gehitet wurde als ablenkung, torpedo -> schießt in einer linie) Anzahl an
+X schiffen berechnung -> (size*size)*0.17 -> anzahl an schiff feldern -> ans -
+X 2(3,3,4,5)   -> periodisch
+
+
+
+Dynamic Layout Based on Console Size:
+	Use getConsoleSize(int& width, int& height) to determine the console's dimensions dynamically.
+	Divide the console into sections (e.g., grid areas, info panels) proportionally using percentages of width/height.
+	Ensure elements are centered or evenly spaced using calculated padding/margins.
+	Example: For a 100x30 console, allocate 50% width for a grid, 30% for a ship list, and 10% for margins.
+
+Grid Rendering:
+	Represent the game board as a 10x10 grid (standard Battleship size) or adjustable.
+	Use cursorPosition(x, y) to place grid elements precisely.
+	Color-code cells based on CellState (WATER, SHIP, HIT, MISS) using foregroundColor and backgroundColor.
+	Use symbols (e.g., '~' for WATER, '■' for SHIP, 'X' for HIT, 'O' for MISS) for clarity.
+	Example: Set backgroundColor(21) for WATER (blue-ish) and print '~'.
+
+Information Panels:
+	Display critical info (e.g., ship list, game status) in dedicated areas.
+	Use selectGraphicRendition for styling (e.g., bold, underline) and foregroundColor for emphasis.
+	Align text using calculated column positions with cursorHorizontalAbsolute.
+
+Responsive Spacing:
+	Calculate margins and padding dynamically: (console_width - content_width) / 2 for centering.
+	Use moveCursor or cursorForward for fine-tuned positioning.
+	Example: Center a 20-char wide ship list in a 100-char console by moving cursor to column (100 - 20) / 2.
+
+Clearing and Redrawing:
+	Use eraseInDisplay(2) to clear the entire screen before redrawing to avoid flickering.
+	Optionally, use eraseInLine for partial updates (e.g., updating a single row).
+	Call std::cout.flush() after each draw to ensure immediate rendering.
+
+Color and Style Consistency:
+	Define a color scheme for CellState:
+	WATER: Blue background (backgroundColor(21)).
+	SHIP: Gray background (backgroundColor(245)).
+	HIT: Red background (backgroundColor(196)).
+	MISS: White background (backgroundColor(255)).
+	Use resetBackgroundColor and resetForegroundColor after each cell to avoid bleed.
+	Apply selectGraphicRendition(1) for bold text in headers.
+
+Cursor Management:
+	Hide cursor during rendering with hideCursor() to reduce visual noise.
+	Show cursor with showCursor() when user input is needed (e.g., selecting a cell).
+	Use cursorPosition to highlight the active cell in Place or Shoot modes.
+
+Input Handling:
+	Use <conio.h>'s _getch() for non-blocking input (e.g., arrow keys, Enter).
+	Map inputs to actions (e.g., arrow keys for cursor movement, Enter for selection).
+	Example: Detect arrow keys to move cursor in Shoot mode, update with cursorPosition.
+
+
+
+
+UI Variant 1: Place UI
+
+Objective: Display a single centered game board for placing ships, with a ship list on the left showing remaining ships to place.
+
+Critical Information:
+	Game board (10x10 grid) showing placed ships (SHIP) and water (WATER).
+	Highlighted cell (CHOOSE state) for current placement.
+	List of ships (e.g., Carrier: 5, Battleship: 4, etc.) with status (placed or not).
+	Instructions (e.g., "Use arrows to move, Enter to place, R to rotate").
+
+Approach:
+	Layout:
+		Divide console: 30% left for ship list, 50% center for grid, 20% right margin.
+		Calculate grid size: Each cell is 2x1 (e.g., " ~ ") for readability, so 10x10 grid needs ~20x10 chars.
+		Center grid using (console_width - grid_width) / 2 for x-position.
+		Place ship list at column ~5, starting at row 5 for top alignment.
+	Grid Rendering:
+		Loop through 10x10 grid, use cursorPosition(row, col) to place each cell.
+		Use backgroundColor based on CellState (e.g., SHIP or WATER).
+		Highlight CHOOSE cell with selectGraphicRendition(7) (reverse video).
+		Add row/column labels (1-10, A-J) using foregroundColor(255) for white.
+	Ship List:
+		Store ships in a vector<pair<string, int>> (name, size).
+		Print each ship at cursorPosition(row, 5) with status (e.g., "Carrier (5): [Placed]").
+		Use selectGraphicRendition(1) for bold unplaced ships.
+
+
+
+UI Variant 2: Shoot UI
+
+Objective: Display two boards: enemy board on the left (for shooting) and player's board on the right (showing damage).
+
+Critical Information:
+	Enemy board: Shows HIT, MISS, WATER (hiding SHIP).
+	Player board: Shows SHIP, HIT, MISS, WATER.
+	Highlighted cell (SHOOT state) on enemy board for targeting.
+	Status (e.g., "Ships remaining: 5").
+	Instructions (e.g., "Arrows to aim, Enter to shoot").
+
+Approach:
+	Layout:
+		Split console: 45% left for enemy board, 45% right for player board, 10% margins.
+		Each board is ~20x10 chars, spaced evenly.
+		Place enemy board at (width * 0.05, 5), player board at (width * 0.55, 5).
+		Status/instructions at bottom (row ~25).
+	Grid Rendering:
+		Enemy board: Hide SHIP cells (render as WATER), show HIT/MISS.
+		Player board: Show all states (SHIP, HIT, MISS, WATER).
+		Use backgroundColor for states (e.g., HIT: red, MISS: white).
+		Highlight SHOOT cell with selectGraphicRendition(7).
+		Add labels (A-J, 1-10) for both boards.
+	Status/Instructions:
+		Print at cursorPosition(25, 5) with foregroundColor(255) for visibility.
+
+
+UI Variant 3: Multiplayer UI
+
+Objective: Display multiple enemy boards (for 3+ players) and the player's board, allowing selection of which enemy to attack.
+
+Critical Information:
+	Multiple enemy boards (WATER, HIT, MISS, hiding SHIP).
+	Player’s board (SHIP, HIT, MISS, WATER).
+	Highlighted cell (MULTI state) on selected enemy board.
+	Player names/labels for each enemy board.
+	Status (e.g., "Player 1's turn, 3 enemies remaining").
+	Instructions (e.g., "Tab to switch enemy, Enter to shoot").
+
+Approach:
+	Layout:
+		For N enemies, allocate console dynamically:
+		If N=2, place 2 enemy boards on top, player board below.
+		If N>2, use a grid layout (e.g., 2x2 for 4 players).
+		Example for 3 enemies: 3 boards across top (each ~20x10), player board below.
+		Calculate positions: Enemy boards at (width * 0.05 + i * (width * 0.3), 5), player board at (width * 0.35, 15).
+		Use margins (~5% per side).
+	Grid Rendering:
+		Render each enemy board like Shoot UI’s enemy board (hide SHIP).
+		Highlight selected enemy’s SHOOT cell with selectGraphicRendition(7).
+		Player board shows all states.
+		Label each board with player name using cursorPosition(row-1, col) and selectGraphicRendition(1).
+	Switching Enemies:
+		Use _getch() to detect Tab key for cycling through enemies.
+		Update highlighted board by redrawing only the changed cell.
+
+
+
+
+UI Design Concepts for Battleship Game
+
+General Approaches
+	Dynamic Layout: Use getConsoleSize to adapt to console dimensions, allocate space proportionally.
+	Grid Rendering: Use cursorPosition, backgroundColor for cell states, symbols for clarity.
+	Information Panels: Use selectGraphicRendition for styling, cursorHorizontalAbsolute for alignment.
+	Responsive Spacing: Center elements with calculated margins (e.g., (width - content_width) / 2).
+	Clearing: Use eraseInDisplay(2) for full redraws, eraseInLine for partial updates.
+	Color Scheme:
+		WATER: backgroundColor(21) (blue).
+		SHIP: backgroundColor(245) (gray).
+		HIT: backgroundColor(196) (red).
+		MISS: backgroundColor(255) (white).
+
+Place UI
+	Layout: 30% left (ship list), 50% center (grid), 20% margins.
+	Grid: 10x10, 2x1 cells, centered with cursorPosition.
+	Ship List: vector<pair<string, int>>, print at fixed column, bold unplaced ships.
+	Example: Center grid, print ships at cursorPosition(5, 5).
+
+Shoot UI
+	Layout: 45% left (enemy board), 45% right (player board), 10% margins.
+	Grids: Enemy hides SHIP, player shows all, highlight SHOOT cell.
+	Status: Print at bottom with foregroundColor(255).
+	Example: Position boards at (width * 0.05, 5) and (width * 0.55, 5).
+
+Multiplayer UI
+	Layout: N enemy boards on top (e.g., 3 across), player board below.
+	Grids: Render enemy boards like Shoot UI, highlight selected enemy.
+	Switching: Use _getch() for Tab key to cycle enemies.
+	Example: Space enemy boards at (width * 0.05 + i * (width * 0.3), 5).
+
+Notes
+	Minimize redraws for performance.
+	Test on various console sizes.
+	Use hideCursor during rendering, showCursor for input.
+
+
+
+
+On Multi press Tab to switch selected player that player blinks now

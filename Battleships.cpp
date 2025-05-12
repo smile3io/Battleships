@@ -1,3 +1,4 @@
+#include "console_utils.h"
 #include <iostream>
 #include <string>
 #include <vector>
@@ -8,25 +9,10 @@
 #include <limits> // for numeric_limits cin
 #include <utility> // for std::pair
 
-using namespace std;
+using namespace console_utils;
 
-/*
-- zwei windows für jeden eins
-- leaderboard kann auf zb sql oder exel oder sheets datei zugreifen und diese umschreiben bzw lesen und dieses dann ausgeben
-- Salvo mode 5 shots at once
-- uboot -> kann mit anderem schiff überlappen oder kann nach treffer
-- unterwasser gehen oder position ändern Leaderboard KI Schwierigkeiten
-X Feldgrößen - Schiffs anzahl
-- Mehrspieler zB 2-4
-- Schiffe automatisch plazieren
-X Regeln ändern (Platz zwischen Schiffen)
-- Unterschiedliche Schiffs größen  2345(6789)->wenn map größer als 10
-- für jedes schiff eine fähigkeit
-- (Abilities wie "Sonar"->deckt fläche auf, Unterwasser Minen -> sagen dass
-- gehitet wurde als ablenkung, torpedo -> schießt in einer linie) Anzahl an
-X schiffen berechnung -> (size*size)*0.17 -> anzahl an schiff feldern -> ans -
-X 2(3,3,4,5)   -> periodisch
-*/
+
+void titleBox();
 
 //---------------------------------------ENUM--------------------------------------------------
 
@@ -42,13 +28,18 @@ enum class Settings {
     SMALL, MEDIUM, LARGE,   // size
     EASY, NORMAL, HARD,     // diff
     STANDARD, SALVO, RACE,  // mode
-    FAR, CLOSE,             // dist
+    AWAY, CLOSE,             // dist
     FIVE = 17, TEN = 30,    // ship
     UP = 72, DOWN = 80,     // arrow
     LEFT = 75, RIGHT = 77,  // arrow
     ROTATE = 114, ENTER = 13,// rotate R  ENTER 
     HOR = 0, VER = 1,       // rotation
     SHIPS, SHOTS, ALL       // render 
+};
+
+enum CellState {
+    WATER, SHIP, HIT, MISS, // determines color
+    PLACE, SHOOT, MULTI    // decides which UI 
 };
 
 //---------------------------------------Struct------------------------------------------------
@@ -70,10 +61,10 @@ public:
     Settings shipSetting;   //  5 schiffe auf 10 (17 aka 0.17) / 10 auf 10 (30 aka 0.3)
     int fieldSize;          //  5       10          15                  1** 2*** 1**** 1***** 17Felder / 4** 3*** 2**** 1***** 30Felder
     int shipCount;          //  2       5           12                  0,17 / 0,30
-    vector<int> shipsLenght;//  2*2     2,3*2,4,5   2*4,3*4,4*2,5*2
+    std::vector<int> shipsLenght;//  2*2     2,3*2,4,5   2*4,3*4,4*2,5*2
     Settings aiDifficulty;  //  easy    normal      hard
-    vector<string> xAxisLabel;
-    vector<int> yAxisLabel;
+    std::vector<std::string> xAxisLabel;
+    std::vector<int> yAxisLabel;
 
     // standard constructor
     Setup() :
@@ -117,7 +108,7 @@ public:
         // generating the alphabet on the x-axis
         for (int i = 1; i <= fieldSize; i++) {
             int columns = i;
-            string label = "";
+            std::string label = "";
             while (columns > 0) {
                 columns--; // Adjust to 0-25 range.
                 label = (char)('A' + (columns % 26)) + label;
@@ -167,54 +158,58 @@ public:
     }
     // displays the current rules
     const void displayRules() {
-        cout << "Mode: ";
+        std::cout << "Mode: ";
         switch (mode) {
-        case Settings::STANDARD: cout << " Classic\n"; break;
-        case Settings::SALVO: cout << " Five shots\n"; break;
-        case Settings::RACE: cout << " Race to the end\n"; break;
+        case Settings::STANDARD: std::cout << " Classic\n"; break;
+        case Settings::SALVO: std::cout << " Five shots\n"; break;
+        case Settings::RACE: std::cout << " Race to the end\n"; break;
         }
-        cout << "Distance: ";
+        std::cout << "Distance: ";
         switch (distance) {
-        case Settings::FAR: cout << "One apart\n"; break;
-        case Settings::CLOSE: cout << "Next to another\n"; break;
+        case Settings::AWAY: std::cout << "One apart\n"; break;
+        case Settings::CLOSE: std::cout << "Next to another\n"; break;
         }
         int num;
         (shipCount) ? num = shipCount : num = shipsLenght.size() ;
-        cout << "Num of ships: " << num << endl;
-        cout << "Everone has:\n";
+        std::cout << "Num of ships: " << num << std::endl;
+        std::cout << "Everone has:\n";
         for (int i = 2; i <= 5; i++) {
             int amount = count(shipsLenght.begin(), shipsLenght.end(), i);
-            cout << amount << "x" << i << "er ships" << endl;
+            std::cout << amount << "x" << i << "er ships" << std::endl;
         }
         if (shipCount == 0) {
-            cout << "Ship amount: ";
+            std::cout << "Ship amount: ";
             switch (shipSetting) {
-            case Settings::FIVE: cout << "low\n"; break;
-            case Settings::TEN: cout << "high\n"; break;
+            case Settings::FIVE: std::cout << "low\n"; break;
+            case Settings::TEN: std::cout << "high\n"; break;
             }
         }
-        cout << "Fieldsize: " << fieldSize << "x" << fieldSize << endl;
-        cout << "AI diff: ";
+        std::cout << "Fieldsize: " << fieldSize << "x" << fieldSize << std::endl;
+        std::cout << "AI diff: ";
         switch (aiDifficulty) {
-        case Settings::EASY: cout << "easy\n"; break;
-        case Settings::NORMAL: cout << "normal\n"; break;
-        case Settings::HARD: cout << "hard\n"; break;
+        case Settings::EASY: std::cout << "easy\n"; break;
+        case Settings::NORMAL: std::cout << "normal\n"; break;
+        case Settings::HARD: std::cout << "hard\n"; break;
         }
     }
 };
 
 Setup gameSetup;
+// time in ms
+int sleepTime = 1000;
+// console dimensions
+int consoleWidth, consoleHeight;
 
 class Player {
 public:
     class Ships;
     int number;         // player number
-    string name;        // player name
+    std::string name;        // player name
     int score = 0;      // session score calc -> win, ships sunken points
-    vector<vector<char>> field; // own player field (z.B. '.', 'O', 'X', '#')
-    vector<vector<char>> ships; // ship position for display
-    vector<vector<char>> shots; // shot position
-    vector<Ships> allShips;     // list of all ships of a player 
+    std::vector<std::vector<char>> field; // own player field (z.B. '.', 'O', 'X', '#')
+    std::vector<std::vector<char>> ships; // ship position for display
+    std::vector<std::vector<char>> shots; // shot position
+    std::vector<Ships> allShips;     // list of all ships of a player 
     int shotsFired = 0;
 
     // create the player with a number
@@ -227,9 +222,9 @@ public:
     void shoot() {}
     //
     void placeShips() {
-        cout << name << ", your turn\n";
+        std::cout << name << ", your turn\n";
         // cursor start position in center of field
-        pair<bool, pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
+        std::pair<bool, std::pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
         for (int lenght : gameSetup.lenghts) {
             for (int count = gameSetup.lenghtsCount[lenght - 2]; count > 0; count--) {
                 bool placed = false;
@@ -274,7 +269,7 @@ public:
                                 }
                             }
                         }
-                        if (valid && gameSetup.distance == Settings::FAR) {
+                        if (valid && gameSetup.distance == Settings::AWAY) {
 
                         }
                         if (valid) {
@@ -294,6 +289,7 @@ public:
                         }
                         else {
                             std::cout << "Invalid placement! Try again.\n";
+                            Sleep(sleepTime);
                         }
                     }
 
@@ -321,10 +317,14 @@ public:
     }
     // Registers the player and saves the name
     void askName() {
-        //clearConsole();
-        cout << "Player " << number << " whats your name?\n";
-        cin >> name;
-        cout << "Hello " << name << " welcome to Battleships!\n";
+        titleBox();
+        cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
+        std::cout << "Player " << number << " whats your name?\n";
+        cursorPosition(consoleHeight * 0.45 + 2, consoleWidth * 0.25);
+        std::cin >> name;
+        cursorPosition(consoleHeight * 0.45 + 4, consoleWidth * 0.25);
+        std::cout << "Hello " << name << " welcome to Battleships!\n";
+        Sleep(sleepTime);
     }
     // score considers win and sunken ships and hits (and total shots)
     void /*update?*/scoring() {} // Diese Funktion sollte aufgerufen werden, wenn ein Spieler ein Schiff versenkt oder das Spiel gewinnt.(Verhältnis von Treffern zu Schüssen)
@@ -334,10 +334,10 @@ public:
         int size;
         bool sunken;
         Settings rotation;
-        pair<int, int> cord;
-        vector<bool> hits;
+        std::pair<int, int> cord;
+        std::vector<bool> hits;
 
-        Ships(int s, Settings r, pair<int, int> c) : size(s), rotation(r), cord(c), sunken(false){
+        Ships(int s, Settings r, std::pair<int, int> c) : size(s), rotation(r), cord(c), sunken(false){
             hits.resize(s, false);
         }
     };
@@ -346,25 +346,33 @@ public:
 //--------------------------------------GLOBAL--------------------------------------------
 
 GameState state = GameState::MENU; 
-stack<MenuID> menuStack;
+std::stack<MenuID> menuStack;
+
+
+
+// 
+int fieldDisplayWidth = gameSetup.fieldSize * 2 + 6;
+int fieldDisplayHeight = gameSetup.fieldSize + 1 + 4;
 
 //-----------------------------------Deklaration--------------------------------------
 
-void displayMenu(const vector<pair<char, string>>& options);
-MenuID goback(stack<MenuID>& stack);
+void displayMenu(const std::vector<std::pair<char, std::string>>& options);
+MenuID goback(std::stack<MenuID>& stack);
 void clearConsole();
-void genFields(vector<Player>& players);
-void initGame(vector<Player>& players);
+void genFields(std::vector<Player>& players);
+void initGame(std::vector<Player>& players);
 
-void placing(vector<Player>& players);
-void render(Player& player, pair<bool, pair<int, int>> cursor = { false, {0,0} }, Settings setting = Settings::ALL, int size = 0, Settings rotation = Settings::HOR);
+void placing(std::vector<Player>& players);
+void render(Player& player, Settings setting = Settings::ALL, std::pair<bool, std::pair<int, int>> cursor = { false, {0,0} }, int size = 0, Settings rotation = Settings::HOR);
 
-void gameLoop(vector<Player>& players);
+void gameLoop(std::vector<Player>& players);
+
+void titleBox();
 
 //-------------------------------MAPS--------------------------------------------
 
 // data map for the menu text
-map<MenuID, vector<pair<char, string>>> menuData = {
+std::map<MenuID, std::vector<std::pair<char, std::string>>> menuData = {
     {MenuID::MAIN, {
         {'1', "Play"},
         {'2', "Leaderboard"},
@@ -404,7 +412,7 @@ map<MenuID, vector<pair<char, string>>> menuData = {
 };
 
 // map for the coresponding actions for the choices in menus 
-map<MenuID, map<char, function<void()>>> menuActions = {
+std::map<MenuID, std::map<char, std::function<void()>>> menuActions = {
     {MenuID::MAIN, {
         {'1', []() {menuStack.push(MenuID::PRESETS); }},
         {'2', []() {/* TODO: Rangliste SQL?*/}},
@@ -426,27 +434,34 @@ map<MenuID, map<char, function<void()>>> menuActions = {
     {MenuID::OPTIONS, {
         {'1', []() {menuStack.push(MenuID::MODE); }},
         {'2', []() {
-            clearConsole();
-            cout << "Current: " << gameSetup.fieldSize << endl << endl;
-            cout << "How big should the field be?\n";
+            cursorPosition(consoleHeight * 0.7, consoleWidth * 0.25);
+            std::cout << "Current: " << gameSetup.fieldSize << std::endl << std::endl;
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            std::cout << "How big should the field be?" << std::endl;
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             int size;
-            cin >> size;
-            if (cin.fail()) { //Fehlerbehandlung
-                cout << "Invalid Input. Please input a number.\n";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin >> size;
+            if (std::cin.fail()) { //Fehlerbehandlung
+                std::cout << "Invalid Input. Please input a number.";
+                Sleep(sleepTime);
+                std::cin.clear();
                 return;
             }
             gameSetup.fieldSize = size;
         }},
         {'3', []() {
-            clearConsole();
+            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::TEN){
-                cout << "Current: many\n\n";
+                std::cout << "Current: many" << std::endl << std::endl;
             }else if (gameSetup.shipSetting == Settings::FIVE){
-                cout << "Current: few\n\n";
+                std::cout << "Current: few" << std::endl << std::endl;
             }
-            cout << "How many ships?\n\t1. few\n\t2. many\n";
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            std::cout << "How many ships?\n\n";
+            cursorHorizontalAbsolute(consoleWidth * 0.25); 
+            std::cout << "[1]  few\n";
+            cursorHorizontalAbsolute(consoleWidth * 0.25); 
+            std::cout << "[2]  many\n";
             int num = _getch();
             if (0 < num < 3) { num == 1 ? gameSetup.shipSetting = Settings::FIVE : gameSetup.shipSetting = Settings::TEN; };
             if (num == '1') {
@@ -454,43 +469,55 @@ map<MenuID, map<char, function<void()>>> menuActions = {
             }else if (num == '2') {
                gameSetup.shipSetting = Settings::TEN;
             }else {
-               cout << "Invalid Input.\n";
-               return;
+                cursorHorizontalAbsolute(consoleWidth * 0.25);
+                std::cout << "Invalid Input.\n";
+                Sleep(sleepTime);
+                return;
             }
             gameSetup.shipCount = 0;
             gameSetup.genShips();
         }},
         {'4', []() {
-            clearConsole();
-            cout << "Current: " << gameSetup.shipCount << endl << endl;
-            cout << "How many ships?\n(This setting overwrites the automatic number!)\n";
+            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
+            std::cout << "Current: " << gameSetup.shipCount << std::endl << std::endl;
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            std::cout << "How many ships?\t(This setting overwrites the automatic number!)\n";
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             int num;
-            cin >> num;
-            if (cin.fail()) { //Fehlerbehandlung
-                cout << "Invalid Input. Please input a number.\n";
-                cin.clear();
-                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            std::cin >> num;
+            if (std::cin.fail()) { //Fehlerbehandlung
+                std::cout << "Invalid Input. Please input a number.\n";
+                Sleep(sleepTime);
+                std::cin.clear();
                 return;
             }
             gameSetup.shipCount = num;
             gameSetup.genShips();
         }},
         {'5', []() {
-            clearConsole();
+            cursorPosition(consoleHeight * 0.65, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::CLOSE) {
-                cout << "Current: close\n\n";
+                std::cout << "Current: close\n\n";
             }
-            else if (gameSetup.shipSetting == Settings::FAR) {
-                cout << "Current: far\n\n";
+            else if (gameSetup.shipSetting == Settings::AWAY) {
+                std::cout << "Current: far\n\n";
             }
-            cout << "What distance should the ships be?\n\t1. close\n\t2. far\n";
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            std::cout << "What distance should the ships be?\n";
+                cursorHorizontalAbsolute(consoleWidth * 0.25); 
+            std::cout << "[1]  close\n";
+                cursorHorizontalAbsolute(consoleWidth * 0.25); 
+            std::cout << "[2]  far\n";
             int num = _getch();
             if (num == '1') {
                 gameSetup.distance = Settings::CLOSE;
             }else if (num == '2') {
-           gameSetup.distance = Settings::FAR;
+                gameSetup.distance = Settings::AWAY;
             }else {
-               cout << "Invalid Input.\n";
+                std::cout << std::endl;
+                cursorHorizontalAbsolute(consoleWidth * 0.25);
+                std::cout << "Invalid Input.\n";
+                Sleep(sleepTime);
                return;
             }
         }},
@@ -511,16 +538,21 @@ map<MenuID, map<char, function<void()>>> menuActions = {
 //----------------------------------------MAIN--------------------------------------------------
 
 int main() {
-    srand(time(0));
+    // enables console manipulation
+    enableVirtualTerminalProcessing();
+    // getting console dimensions
+    getConsoleSize(consoleWidth, consoleHeight);
     // starting with main menu
     menuStack.push(MenuID::MAIN);
     // saving all players
-    vector<Player> players;
+    std::vector<Player> players;
+
+    hideCursor();
 
     while (true) {
         if (state == GameState::MENU) {
             MenuID currentMenuID = menuStack.top();
-            vector<pair<char, string>> currentMenu = menuData[currentMenuID];
+            std::vector<std::pair<char, std::string>> currentMenu = menuData[currentMenuID];
             gameSetup.genShips();
             displayMenu(currentMenu);
 
@@ -535,11 +567,13 @@ int main() {
             if (validInput) {
                 menuActions[currentMenuID][choice]();  // perform specific action
             }else {
-                cout << "Wrong Input" << endl;
+                std::cout << "Wrong Input" << std::endl;
+                Sleep(sleepTime);
                 continue;
             }
         }else if (state == GameState::GAME_LOOP){
             initGame(players);
+            //render(players[2], Settings::ALL);
             placing(players);
             gameLoop(players);
         }else if (state == GameState::GAME_OVER){
@@ -551,50 +585,94 @@ int main() {
 
 //---------------------------------------GAME--------------------------------------------------
 
-void initGame(vector<Player>& players) {
+void initGame(std::vector<Player>& players) {
+    // clear screen
+    eraseInDisplay(2);
     gameSetup.genAxis();
     gameSetup.genShips();
+    cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
     for (int i = 0; i < gameSetup.playerCount; i++) {
         players.push_back(i + 1);
         players[i].askName();
+        cursorPosition(consoleHeight * 0.65 + i*2, consoleWidth * 0.25);
     }
-    if (gameSetup.playerCount == 1) {
-        players.push_back(2);
-        genAIField();
-    }
+    if (gameSetup.playerCount == 1) { players.push_back(2); players[1].name = "AI"; }
     genFields(players);
-
+    // placing ships for AI
+    if (gameSetup.playerCount == 1) {
+        for (int lenght : gameSetup.lenghts) {
+            for (int count = gameSetup.lenghtsCount[lenght - 2]; count > 0; count--) {
+                bool placed = false;
+                while (!placed) {
+                    Settings direction;
+                    (rand() % 1) ? direction = Settings::HOR : direction = Settings::VER;
+                    int col = rand() % (direction == Settings::VER ? gameSetup.fieldSize - lenght + 1 : gameSetup.fieldSize);
+                    int row = rand() % (direction == Settings::HOR ? gameSetup.fieldSize - lenght + 1 : gameSetup.fieldSize);
+                    std::pair<int, int> cursor = { col, row };
+                    bool valid = true;
+                    if (direction == Settings::HOR) {   // horizontal
+                        for (int j = 0; j < lenght; j++) {
+                            if (players[1].ships[col][row + j] == '*') {
+                                valid = false;  // already a ship
+                                break;
+                            }
+                        }
+                    }
+                    else if (direction == Settings::VER) {  // vertical
+                        for (int j = 0; j < lenght; j++) {
+                            if (players[1].ships[col + j][row] == '*') {
+                                valid = false;  // already a ship
+                                break;
+                            }
+                        }
+                    }
+                    if (valid && gameSetup.distance == Settings::AWAY) {}
+                    if (valid) {
+                        if (direction == Settings::HOR) {   // 
+                            for (int j = 0; j < lenght; j++) {
+                                players[1].ships[col][row + j] = '*';
+                            }
+                            players[2].allShips.emplace_back(lenght, direction, cursor);
+                        }
+                        else if (direction == Settings::VER) {
+                            for (int j = 0; j < lenght; j++) {
+                                players[1].ships[col + j][row] = '*';
+                            }
+                            players[1].allShips.emplace_back(lenght, direction, cursor);
+                        }
+                        placed = true;
+                    }
+                }
+            }
+        }
+    }
     //TODO: Schiffe platzieren.  Die Schiffe müssen jetzt platziert werden, entweder
     // automatisch oder durch den Spieler.  Dies ist ein komplexer Teil des Spiels,
     // der die Interaktion mit dem Spieler und die Überprüfung der Platzierung
     // beinhaltet.
 }
 
-void genAIField() {
-
-}
-
-void debugShips(vector<Player>& players) {
+void debugShips(std::vector<Player>& players)  {
     for (int i = 0; i < players.size(); i++) {
         for (const auto& ship : players[i].allShips) {
-            cout << "Ship: size=" << ship.size << ", dir=" << (ship.rotation == Settings::HOR ? "HOR" : "VER")
+            std::cout << "Ship: size=" << ship.size << ", dir=" << (ship.rotation == Settings::HOR ? "HOR" : "VER")
                 << ", pos=(" << ship.cord.first << "," << ship.cord.second << "), sunken=" << ship.sunken << "\n";
         }
     }
 }
 
-void placing(vector<Player>& players) {
+void placing(std::vector<Player>& players) {
     for (int i = 0; i < gameSetup.playerCount; i++) {
         clearConsole();
-        cout << players[i].name << ", your turn\n";
+        std::cout << players[i].name << ", your turn\n";
         // cursor start position in center of field
-        pair<bool, pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
+        std::pair<bool, std::pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
         for (int lenght : gameSetup.lenghts) {
             for (int count = gameSetup.lenghtsCount[lenght - 2]; count > 0; count--) {
                 bool placed = false;
                 Settings direction = Settings::HOR;  // 0 = horizontal  1 = vertical
                 while (!placed) {
-                    render(players[i], cursor, Settings::SHIPS, lenght, direction);
+                    render(players[i], Settings::SHIPS, cursor, lenght, direction);
                     int col = cursor.second.first;  // vertical
                     int row = cursor.second.second; // horizontal
                     int size = gameSetup.fieldSize;
@@ -634,7 +712,7 @@ void placing(vector<Player>& players) {
                                 }
                             }
                         }
-                        if (valid && gameSetup.distance == Settings::FAR) {
+                        if (valid && gameSetup.distance == Settings::AWAY) {
 
                         }
                         if (valid) {
@@ -664,8 +742,8 @@ void placing(vector<Player>& players) {
     }
 }
 
-void render(Player& player, pair<bool, pair<int, int>> cursor, Settings setting, int size, Settings rotation) {
-    vector<vector<char>> renderField = player.field;
+void render(Player& player, Settings setting, std::pair<bool, std::pair<int, int>> cursor, int size, Settings rotation) {
+    std::vector<std::vector<char>> renderField = player.field;
 
     int col = cursor.second.first;
     int row = cursor.second.second;
@@ -699,7 +777,7 @@ void render(Player& player, pair<bool, pair<int, int>> cursor, Settings setting,
                 for (int i = 0; i < size; i++) {
                     renderField[col][row + i] = player.ships[col][row + i] == '*' ? 'X' : '#';
                 }
-            }else if (gameSetup.distance == Settings::FAR) {
+            }else if (gameSetup.distance == Settings::AWAY) {
                 
             }
             
@@ -708,7 +786,7 @@ void render(Player& player, pair<bool, pair<int, int>> cursor, Settings setting,
                 for (int i = 0; i < size; i++) {
                     renderField[col + i][row] = player.ships[col + i][row] == '*' ? 'X' : '#';
                 }
-            }else if (gameSetup.distance == Settings::FAR) {
+            }else if (gameSetup.distance == Settings::AWAY) {
 
             }
         }
@@ -719,28 +797,29 @@ void render(Player& player, pair<bool, pair<int, int>> cursor, Settings setting,
     clearConsole();
 
     if (size > 0) {
-        cout << "Placing a " << size << " long ship (" << (rotation == Settings::HOR ? "horizontal" : "vertical") << ")\n";
+        std::cout << player.name << " your turn\n";
+        std::cout << "Placing a " << size << " long ship (" << (rotation == Settings::HOR ? "horizontal" : "vertical") << ")\n";
     }
     else {
-        cout << player.name << " take your shot\n";
+        std::cout << player.name << " take your shot\n";
     }
     // x-axis
-    cout << "   ";
+    std::cout << "   ";
     for (int k = 0; k < gameSetup.fieldSize; k++) {
-        k < 26 && gameSetup.fieldSize > 26 ? cout << gameSetup.xAxisLabel[k] << "  " : cout << gameSetup.xAxisLabel[k] << " ";
+        k < 26 && gameSetup.fieldSize > 26 ? std::cout << gameSetup.xAxisLabel[k] << "  " : std::cout << gameSetup.xAxisLabel[k] << " ";
     }
-    cout << endl;
+    std::cout << std::endl;
     // y-axis and field
     for (int i = 0; i < gameSetup.fieldSize; i++) {
-        if (gameSetup.yAxisLabel[i] < 10) cout << " ";
-        cout << gameSetup.yAxisLabel[i] << " ";
-        for (int j = 0; j < gameSetup.fieldSize; j++) cout << renderField[i][j] << (gameSetup.fieldSize > 26 ? "  " : " ");
-        cout << endl;
+        if (gameSetup.yAxisLabel[i] < 10) std::cout << " ";
+        std::cout << gameSetup.yAxisLabel[i] << " ";
+        for (int j = 0; j < gameSetup.fieldSize; j++) std::cout << renderField[i][j] << (gameSetup.fieldSize > 26 ? "  " : " ");
+        std::cout << std::endl;
     }
 }
 
 // generates the field for every player 
-void genFields(vector<Player>& players) {
+void genFields(std::vector<Player>& players) {
     for (Player& player : players) {
         player.field.clear();
         player.field.resize(gameSetup.fieldSize);
@@ -758,6 +837,7 @@ void genFields(vector<Player>& players) {
             player.shots[i].resize(gameSetup.fieldSize, ' ');   // inserting " " as place holder
         }
     }
+    
 }
 
 // game function
@@ -765,15 +845,16 @@ void game() {
 }
 
 // 
-void gameLoop(vector<Player>& players) {
-    pair<bool, pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
+void gameLoop(std::vector<Player>& players) {
+    std::pair<bool, std::pair<int, int>> cursor = { true, {gameSetup.fieldSize / 2, gameSetup.fieldSize / 2} };
     bool gameWon = false;
     while (!gameWon) {
         if (gameSetup.playerCount == 1) {
-            render(players[1], cursor, Settings::SHOTS);
+            render(players[2], Settings::SHOTS, cursor);
             int col = cursor.second.first;  // vertical
             int row = cursor.second.second; // horizontal
             int input = _getch();
+            if (input == 224) input = _getch();
             if (input == static_cast<int> (Settings::UP) && col > 0) {
                 cursor.second.first--;
             }
@@ -788,18 +869,18 @@ void gameLoop(vector<Player>& players) {
             }
             else if (input == static_cast<int> (Settings::ENTER)) {
                 bool valid = false;
-                if (players[1].ships[col][row] == '*') {
-                    players[1].shots[col][row] = 'X';
-                    cout << "HIT\n";
+                if (players[2].ships[col][row] == '*') {
+                    players[2].shots[col][row] = 'X';
+                    std::cout << "HIT\n";
                 }
                 else {
-                    players[1].shots[col][row] = 'O';
-                    cout << "MISS\n";
+                    players[2].shots[col][row] = 'O';
+                    std::cout << "MISS\n";
                 }
             }
         }else{
             for (int i = 0; i < gameSetup.playerCount; i++) {
-                render(players[i], cursor, Settings::SHOTS);
+                render(players[i], Settings::SHOTS, cursor);
                 int col = cursor.second.first;  // vertical
                 int row = cursor.second.second; // horizontal
                 int input = _getch();
@@ -819,11 +900,11 @@ void gameLoop(vector<Player>& players) {
                     bool valid = false;
                     if (players[i].ships[col][row] == '*') {
                         players[i].shots[col][row] = 'X';
-                        cout << "HIT\n";
+                        std::cout << "HIT\n";
                     }
                     else {
                         players[i].shots[col][row] = 'O';
-                        cout << "MISS\n";
+                        std::cout << "MISS\n";
                     }
                 }
             }
@@ -844,28 +925,29 @@ void gameLoop(vector<Player>& players) {
 //-------------------------------------FUNKTIONEN-----------------------------------------------
 
 // displays the selected option menu
-void displayMenu(const vector<pair<char, string>>& options) {
-    clearConsole();
-    cout << "\n\n\n\n";
+void displayMenu(const std::vector<std::pair<char, std::string>>& options) {
+    titleBox();
+    cursorPosition(consoleHeight * 0.35, consoleWidth * 0.25);
     for (auto& pair : options) {
-        cout << "\t" << pair.first << ". " << pair.second << endl;
+        std::cout << "[" << pair.first << "]  " << pair.second << std::endl;
+        cursorHorizontalAbsolute(consoleWidth * 0.25);
     }
-    cout << endl << endl;
 }
 
 // go one menu back (pop top menu from stack)
-MenuID goback(stack<MenuID>& stack) {
+MenuID goback(std::stack<MenuID>& stack) {
     if (stack.size() > 1) {
         stack.pop();
         return stack.top();
     }else {
-        cout << "Fehler" << endl;
+        std::cout << "Fehler" << std::endl;
         return stack.top();
     }
 }
 
 // clears the console with a command
 void clearConsole() {
+    // more efficeint clear where only inside of the box is erased not the box itself
     #ifdef _WIN32
         system("cls");
     #else
@@ -874,6 +956,140 @@ void clearConsole() {
 }
 
 //------------------------------------------------------------------------------------
+
+void titleBox() {
+    // clear screen
+    eraseInDisplay(2);
+    // visual box around the console
+    cursorPosition(1, 1);
+    for (int i = 0; i < (consoleWidth - 17) / 2; i++) std::cout << "=";
+    selectGraphicRendition(1);
+    std::cout << " [ BATTLESHIPS ] ";
+    selectGraphicRendition(0);
+    for (int i = 0; i < (consoleWidth - 16) / 2; i++) std::cout << "=";
+    std::cout << "\n";
+    for (int i = 0; i < consoleHeight - 2; i++) std::cout << "|\n";
+    for (int i = 0; i < consoleWidth; i++) std::cout << "=";
+    cursorPosition(2, consoleWidth);
+    for (int i = 0; i < consoleHeight - 2; i++) { cursorHorizontalAbsolute(consoleWidth); std::cout << "|\n"; }
+}
+
+void currentControlls() {
+
+    // String operation add to string
+    //      or
+    // pre plan for each UI
+
+    int width, height;
+    getConsoleSize(width, height);
+    cursorPosition(height - 2, 3);
+    std::cout << "CONTROLLS:\n";
+    cursorHorizontalAbsolute(3);
+    std::cout << "ENTER - change Display | ESC - go back | ARROWS - move";
+}
+
+/*
+
+void fieldBox(int x, int y, Player* p) {
+    // title or who's board 
+    cursorPosition(x - 3, y - 1);
+    selectGraphicRendition(1);
+    std::cout << (p ? p->name + " Board" : " Your Board");
+    selectGraphicRendition(0);
+    std::cout.flush();
+    // box 
+    int width = fieldDisplayWidth - 1;
+    cursorPosition(x - 2, y - 3);
+    std::cout << "+";
+    for (int i = 0; i < width; ++i) std::cout << "-";
+    std::cout << "+";
+    for (int i = 0; i <= fieldDisplayHeight - 2; ++i)
+    {
+        cursorPosition(x - 1 + i, y - 3);
+        std::cout << "|";
+        cursorPosition(x - 1 + i, y + width - 2);
+        std::cout << "|";
+    }
+    cursorPosition(x + fieldDisplayHeight - 3, y - 3);
+    std::cout << "+";
+    for (int i = 0; i < width; ++i) std::cout << "-";
+    std::cout << "+";
+    std::cout.flush();
+
+}
+
+void displayField(int size) {
+    size++;
+    for (int i = 0; i < size; i++) {
+        for (int j = 0; j < size; j++) {
+            // field
+            if (i == 0 && j == 0) std::cout << " ";
+            else if (i == 0 && 1 < j < size) std::cout << " " << j - 1;
+            else if (j == 0 && 0 < i < size) std::cout << " " << i - 1;
+            else std::cout << " ~";
+
+        }
+        cursorBack(size * 2);
+        cursorDown();
+    }
+}
+
+void renderUI(int UI) {
+
+    eraseInDisplay(2);
+    // get console size
+    int width, height;
+    getConsoleSize(width, height);
+
+    // visual box around the console
+    cursorPosition(1, 1);
+    for (int i = 0; i < (width - 17) / 2; i++) std::cout << "=";
+    selectGraphicRendition(1);
+    std::cout << " [ BATTLESHIPS ] ";
+    selectGraphicRendition(0);
+    for (int i = 0; i < (width - 16) / 2; i++) std::cout << "=";
+    std::cout << "\n";
+    for (int i = 0; i < height - 2; i++) std::cout << "|\n";
+    for (int i = 0; i < width; i++) std::cout << "=";
+    cursorPosition(2, width);
+    for (int i = 0; i < height - 2; i++) { cursorHorizontalAbsolute(width); std::cout << "|\n"; }
+
+    // printing different UI's
+    if (UI == PLACE) {
+        int fieldHeight = (height + 2 - fieldDisplayHeight) / 2 + 1;
+        int fieldWidth = (width + 2 - fieldDisplayWidth) / 2 + 1;
+        cursorPosition(fieldHeight, fieldWidth);
+        displayField(gameSetup.fieldSize);
+        fieldBox(fieldHeight, fieldWidth, &enemy);
+        cursorPosition(height + 2, 1);
+    }
+    else if (UI == SHOOT) {
+        int fieldHeight = (height + 2 - fieldDisplayHeight) / 2 + 1;
+        int fieldWidth = (width + 2 - fieldDisplayWidth) / 3 + 1;
+        cursorPosition(fieldHeight, fieldWidth);
+
+        displayField(gameSetup.fieldSize);
+        fieldBox(fieldHeight, fieldWidth, &enemy);
+        cursorPosition(fieldHeight, 2 * fieldWidth);
+        displayField(gameSetup.fieldSize);
+        fieldBox(fieldHeight, 2 * fieldWidth, &enemy);
+        cursorPosition(height + 2, 1);
+    }
+    else if (UI == MULTI) {
+        for (int i = 1; i <= gameSetup.playerCount; i++)
+        {
+            int fieldY = (height + 2 - fieldDisplayHeight) / 2 + 1;
+            int fieldX = ((width + 2 - fieldDisplayWidth) * (i / (gameSetup.playerCount + 1.))) + 1;
+            cursorPosition(fieldY, fieldX);
+            displayField(gameSetup.fieldSize);
+            fieldBox(fieldY, fieldX, &enemy);
+        }
+    }
+}
+
+*/
+
+
 
 /*
 void placeShips(vector<Player>& players) {
@@ -918,28 +1134,6 @@ void placeShips(vector<Player>& players) {
                 }
             }
         }
-    }
-}
-void select(Player& player, pair<int, int> cursor, int size) {
-    vector<vector<char>> render;
-    render.clear();
-    render = player.field;
-    clearConsole();
-    cout << "Placing a " << size << " long ship\n";
-    // displaying cursor
-    render[cursor.first][cursor.second] = '#';
-    // x-axis
-    for (int k = 0; k < gameSetup.fieldSize; k++) {
-        if (!k) cout << "   ";
-        k < 26 && gameSetup.fieldSize > 26 ? cout << gameSetup.xAxisLabel[k] << "  " : cout << gameSetup.xAxisLabel[k] << " ";
-    }
-    cout << endl;
-    // y-axis
-    for (int i = 0; i < gameSetup.fieldSize; i++) {
-        if (i + 1 < 10) cout << " ";
-        cout << gameSetup.yAxisLabel[i] << " ";
-        for (int j = 0; j < gameSetup.fieldSize; j++) gameSetup.fieldSize > 26 ? cout << render[i][j] << "  " : cout << render[i][j] << " ";
-        cout << endl;
     }
 }
 */
