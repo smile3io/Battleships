@@ -7,7 +7,6 @@ enum class Rotation{
     HOR = 0, VER = 1       // rotation
 };
 
-
 class Ships
 {
 public:
@@ -22,4 +21,6 @@ public:
     bool isSunken();
     // checks if a shot is a hit on this ship and marks the segment as hit
     bool isHit(std::pair<int, int> cord);
+
+    // void getSegments();
 };

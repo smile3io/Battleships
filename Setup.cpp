@@ -1,6 +1,5 @@
 #include "Setup.h"
 
-
 Setup::Setup() :
     playerCount(1),
     mode(Settings::STANDARD),
@@ -55,7 +54,7 @@ void Setup::genAxis() {
     }
 }
 // generates num and lenght of ships
-void genShips() {
+void Setup::genShips() {
     shipsLenght.clear();
     if (!shipCount) {
         if (shipSetting == Settings::FIVE) {
@@ -95,6 +94,7 @@ void genShips() {
 }
 // displays the current rules
 const void Setup::displayRules() {
+    UI::titleBox();
     std::cout << "Mode: ";
     switch (mode) {
     case Settings::STANDARD: std::cout << " Classic\n"; break;
@@ -128,4 +128,13 @@ const void Setup::displayRules() {
     case Settings::NORMAL: std::cout << "normal\n"; break;
     case Settings::HARD: std::cout << "hard\n"; break;
     }
+
+    /*
+    UI::titleBox();
+    std::cout << "Battleships Rules:\n";
+    std::cout << "- Place ships on your " << fieldSize << "x" << fieldSize << " grid.\n";
+    std::cout << "- Shoot at opponent's grid to hit ships.\n";
+    std::cout << "- Mode: " << (mode == Settings::STANDARD ? "Standard" : mode == Settings::SALVO ? "Salvo" : "Race") << "\n";
+    std::cout << "- Distance: " << (distance == Settings::AWAY ? "Away (1-cell gap)" : "Close") << "\n";
+    */
 }

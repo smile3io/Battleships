@@ -142,9 +142,7 @@
     <ClCompile Include="AI.cpp" />
     <ClCompile Include="Battleships.cpp" />
     <ClCompile Include="console_utils.cpp" />
-    <ClCompile Include="Cursor.cpp" />
     <ClCompile Include="Game.cpp" />
-    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Setup.cpp" />
     <ClCompile Include="Ships.cpp" />
@@ -156,9 +154,7 @@
   <ItemGroup>
     <ClInclude Include="AI.h" />
     <ClInclude Include="console_utils.h" />
-    <ClInclude Include="Cursor.h" />
     <ClInclude Include="Game.h" />
-    <ClInclude Include="Menu.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Setup.h" />
     <ClInclude Include="Ships.h" />

@@ -1,3 +1,15 @@
+#include "Game.h"
+#include "console_utils.h"
+
+int main() {
+    console_utils::enableVirtualTerminalProcessing();
+    Game game;
+    game.run();
+    return 0;
+}
+
+/*
+
 #include "Player.h"
 #include <iostream>
 #include <string>
@@ -101,10 +113,10 @@ std::map<MenuID, std::vector<std::pair<char, std::string>>> menuData = {
 std::map<MenuID, std::map<char, std::function<void()>>> menuActions = {
     {MenuID::MAIN, {
         {'1', []() {menuStack.push(MenuID::PRESETS); }},
-        {'2', []() {/* TODO: Rangliste SQL?*/}},
+        {'2', []() {}},
         {'3', []() {gameSetup.displayRules(); }},
         {'4', []() {menuStack.push(MenuID::OPTIONS); }},
-        {'0', []() {/*return*/}}}},
+        {'0', []() {}}}},
     {MenuID::PLAY, {
         {'1', []() {gameSetup.playerCount = 1; state = GameState::GAME_LOOP; }},
         {'2', []() {gameSetup.playerCount = 2; state = GameState::GAME_LOOP; }},
@@ -507,7 +519,7 @@ void render(Player& player, Settings setting, int UI, std::pair<bool, std::pair<
 
             }
         }
-    }else if (cursor.first/*&& !size*/) {
+    }else if (cursor.first) {
         renderField[col][row] = '#';    // cursor
     }
     titleBox();
@@ -822,10 +834,9 @@ void fieldBox(int x, int y, Player* p) {
     for (int i = 0; i < width; ++i) std::cout << "-";
     std::cout << "+";
     std::cout.flush();
-
 }
 
-
+*/
 /*
 void placeShips(vector<Player>& players) {
     pair<int, int> cursor(gameSetup.fieldSize / 2, gameSetup.fieldSize / 2);

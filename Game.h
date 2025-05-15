@@ -2,8 +2,12 @@
 
 #include "Player.h"
 #include "Setup.h"
-#include "Menu.h"
+#include "UI.h"
 #include <stack>
+#include <vector>
+#include <map>
+#include <functional>
+#include <conio.h>
 
 enum class GameState {
 	MENU, PLACE, GAME_LOOP, GAME_OVER
@@ -24,13 +28,31 @@ public:
 	std::map<MenuID, std::map<char, std::function<void()>>> menuActions;
 	int fieldDisplayWidth;
 	int fieldDisplayHeight;
+	int consoleWidth;
+	int consoleHeight;
+	int sleepTime;
 
 	Game();
 
+
 	void run();
+
 	void initGame();
+
 	void placingShips();
+
 	void gameLoop();
+
+	void gameOver();
+
 	void handleMenu();
+
+	bool allShipsSunken(const Player& player);
+
+	std::pair<int, int> getAIPosition(const Player& ai);
+
+	void menuGoBack();
+
+	void setState(GameState newState);
 };
 

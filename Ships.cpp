@@ -27,9 +27,9 @@ bool Ships::isSunken() {
 bool Ships::isHit(std::pair<int, int> cord) {
 	for (auto& segment : segments) {
 		if (segment.second == cord) {
-			segment.first == true;
+			segment.first = true;
 			return true;
 		}
 	}
-	return true;
+	return false;
 }

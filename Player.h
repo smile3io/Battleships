@@ -6,8 +6,13 @@
 #include <string>
 #include <utility>
 
-enum class CellState {
-    WATER, SHIP, HIT, MISS // determines color
+enum class Input {
+    ENTER = 13,
+    R = 114,
+    UP = 72,
+    DOWN = 80,
+    LEFT = 75,
+    RIGHT = 77
 };
 
 class Player {
@@ -20,13 +25,20 @@ public:
     std::vector<std::vector<char>> field; // own player field (z.B. '.', 'O', 'X', '#')
     std::vector<std::vector<char>> ships; // ship position for display
     std::vector<std::vector<char>> shots; // shot position
+    std::vector<std::vector<char>> opponentShots;
 
     int shotsFired;
-    int score;      // session score calc -> win, ships sunken points
+    int score;      // session score calc -> ships sunken points
 
     // create the player with a number
-    Player(int n);
+    Player(int number);
 
+    //
+    bool isValidPlacement(int length, Rotation rotation, std::pair<int, int> cord);
+    //
+    void placing();
+    //
+    void placeShip(int lenght, Rotation rotation, std::pair<int, int> cord);
     // generates the field for a player
     void genField();
     // Registers the player and saves the name
@@ -34,9 +46,7 @@ public:
     // prints the field of the current player
     void displayField();
     //
-    void placeShip(int l, Rotation r, std::pair<int, int> c);
-    //
-    void shoot(std::pair<int, int> c);
+    bool gotShot(std::pair<int, int> position);
     //
     void scoring();
 };

@@ -1,5 +1,7 @@
 #pragma once
 
+#include "UI.h"
+
 #include <vector>
 #include <string>
 
@@ -7,7 +9,7 @@ enum class Settings {
     SMALL, MEDIUM, LARGE,   // size
     EASY, NORMAL, HARD,     // diff
     STANDARD, SALVO, RACE, ABILITIES,  // mode
-    ONE, CLOSE,             // dist
+    AWAY, CLOSE,             // dist
     FIVE = 17, TEN = 30,    // ship
 };
 
@@ -37,7 +39,7 @@ public:
     // 
     void genAxis();
     // 
-    void genAxis();
-    // 
     const void displayRules();
+    //
+    void genShips();
 };
