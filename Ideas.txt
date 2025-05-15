@@ -1,4 +1,10 @@
 ﻿
+###Current known ERRORS of problems 
+- on cursor increase due to ship size vector subscript out of range
+
+
+- _kbhit vor key press
+
 
 - zwei windows für jeden eins
 - leaderboard kann auf zb sql oder exel oder sheets datei zugreifen und diese umschreiben bzw lesen und dieses dann ausgeben
@@ -28,7 +34,7 @@ Grid Rendering:
 	Represent the game board as a 10x10 grid (standard Battleship size) or adjustable.
 	Use cursorPosition(x, y) to place grid elements precisely.
 	Color-code cells based on CellState (WATER, SHIP, HIT, MISS) using foregroundColor and backgroundColor.
-	Use symbols (e.g., '~' for WATER, '■' for SHIP, 'X' for HIT, 'O' for MISS) for clarity.
+	Use symbols (e.g., '~' for WATER, '*' for SHIP, 'X' for HIT, 'O' for MISS) for clarity.
 	Example: Set backgroundColor(21) for WATER (blue-ish) and print '~'.
 
 Information Panels:

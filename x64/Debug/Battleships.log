@@ -1,54 +1,361 @@
 ﻿  Battleships.cpp
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(132,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(141,32): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(161,36): warning C4244: "=": Konvertierung von "__int64" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(178,1): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(182,24): warning C4244: "Initialisierung": Konvertierung von "__int64" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(328,59): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(328,38): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(330,63): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(330,45): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(332,63): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(332,45): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(447,62): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(447,42): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(449,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(451,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(456,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(468,62): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(468,42): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(474,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(476,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(478,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(481,19): warning C4804: "<": unsichere Verwendung des Typs "bool" in einer Operation
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(487,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(497,62): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(497,42): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(499,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(501,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(518,62): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(518,42): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(525,51): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(527,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(529,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(538,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(590,66): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(590,46): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(617,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(617,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(621,67): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(621,45): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(695,58): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(695,38): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(747,74): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(747,54): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(763,67): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(839,54): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(839,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(842,47): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(844,47): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(876,24): warning C4244: "Initialisierung": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(1039,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(1039,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(1042,47): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-  Battleships.vcxproj -> C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\x64\Debug\Battleships.exe
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(40,19): error C2535: "void Setup::genAxis(void)": Memberfunktion bereits definiert oder deklariert
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(38): message : Siehe Deklaration von "Setup::genAxis"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(33,17): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(33,11): error C2146: Syntaxfehler: Fehlendes ";" vor Bezeichner "state"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(33,19): error C2825: "GameState": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(33,30): error C2510: "GameState": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34,12): error C2065: "MenuID": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34,6): error C2923: "std::stack": "MenuID" ist kein gültiges Vorlage-Typargument für den _Ty-Parameter.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34): message : Siehe Deklaration von "MenuID"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34,6): error C2976: "std::stack": Nicht genügend Vorlage-Argumente.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(22): message : Siehe Deklaration von "std::stack"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34,29): error C2133: "menuStack": Unbekannte Größe
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(34,20): error C2512: "std::stack": Kein geeigneter Standardkonstruktor verfügbar
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(22,1): message : Siehe Deklaration von "std::stack"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42,14): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42,8): error C2146: Syntaxfehler: Fehlendes ";" vor Bezeichner "goback"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42,20): error C2923: "std::stack": "MenuID" ist kein gültiges Vorlage-Typargument für den _Ty-Parameter.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42): message : Siehe Deklaration von "MenuID"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42,20): error C2976: "std::stack": Nicht genügend Vorlage-Argumente.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(22): message : Siehe Deklaration von "std::stack"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(48,58): error C2838: "ALL": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(48,168): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(61,6): error C2923: "std::map": "MenuID" ist kein gültiges Vorlage-Typargument für den _Kty-Parameter.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42): message : Siehe Deklaration von "MenuID"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(61,6): error C2976: "std::map": Nicht genügend Vorlage-Argumente.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\map(73): message : Siehe Deklaration von "std::map"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(62,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(62,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(62,18): error C2065: "MAIN": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(68,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(68,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(68,18): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(74,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(74,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(74,21): error C2065: "PRESETS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(80,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(80,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(80,21): error C2065: "OPTIONS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(88,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(88,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(88,18): error C2065: "MODE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(93,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(93,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(93,16): error C2065: "AI": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(98,1): error C2514: "std::map": Klassenvorlage kann nicht erstellt werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\map(73): message : Siehe Deklaration von "std::map"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(101,6): error C2923: "std::map": "MenuID" ist kein gültiges Vorlage-Typargument für den _Kty-Parameter.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(42): message : Siehe Deklaration von "MenuID"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(101,6): error C2976: "std::map": Nicht genügend Vorlage-Argumente.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\map(73): message : Siehe Deklaration von "std::map"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(102,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(102,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(102,18): error C2065: "MAIN": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(103,36): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(103,44): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(103,20): error C2065: "PRESETS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(106,36): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(106,44): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(106,20): error C2065: "OPTIONS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(108,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(108,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(108,18): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(109,48): error C2065: "state": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(109,56): error C2825: "GameState": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(109,67): error C2510: "GameState": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(109,20): error C2065: "GAME_LOOP": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(110,48): error C2065: "state": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(110,56): error C2825: "GameState": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(110,67): error C2510: "GameState": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(110,20): error C2065: "GAME_LOOP": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(111,48): error C2065: "state": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(111,56): error C2825: "GameState": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(111,67): error C2510: "GameState": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(111,20): error C2065: "GAME_LOOP": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(112,48): error C2065: "state": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(112,56): error C2825: "GameState": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(112,67): error C2510: "GameState": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(112,20): error C2065: "GAME_LOOP": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(113,21): error C3861: "goback": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(114,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(114,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(114,21): error C2065: "PRESETS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(115,74): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(115,82): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(115,20): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(115,99): error C2039: "genShips" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(115,20): error C2039: "__this" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(116,75): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(116,83): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(116,20): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(116,100): error C2039: "genShips" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(116,20): error C2039: "__this" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(117,74): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(117,82): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(117,20): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(117,99): error C2039: "genShips" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(117,20): error C2039: "__this" ist kein Member von "Setup".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(14): message : Siehe Deklaration von "Setup"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(118,36): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(118,44): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(118,20): error C2065: "PLAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(119,21): error C3861: "goback": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(120,6): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(120,14): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(120,21): error C2065: "OPTIONS": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(121,36): error C2825: "MenuID": Muss eine Klasse oder ein Namespace sein, wenn gefolgt von "::".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(121,44): error C2510: "MenuID": Der linke Teil von "::" muss eine Klasse/Struktur/Union sein
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(121,20): error C2065: "MODE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(123,30): error C2065: "FIELDSIZE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(124,13): error C3861: "cursorPosition": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(126,13): error C3861: "cursorHorizontalAbsolute": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(128,13): error C3861: "cursorHorizontalAbsolute": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(129,13): error C3861: "showCursor": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(133,17): error C3861: "cursorHorizontalAbsolute": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(135,17): error C3861: "Sleep": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Battleships.cpp(135,1): fatal error C1003: Mehr als 100 Fehler gefunden; Kompilierung wird abgebrochen.
+  Cursor.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Cursor.h(4,9): error C2143: Syntaxfehler: Es fehlt ";" vor "<"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Cursor.h(4,9): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Cursor.h(4,26): error C2238: Unerwartete(s) Token vor ";"
+  Game.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(40,19): error C2535: "void Setup::genAxis(void)": Memberfunktion bereits definiert oder deklariert
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(38): message : Siehe Deklaration von "Setup::genAxis"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(23,7): error C2039: "map" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(20): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(23,10): error C2143: Syntaxfehler: Es fehlt ";" vor "<"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(23,10): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(23,70): error C2238: Unerwartete(s) Token vor ";"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,7): error C2039: "map" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(20): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,10): error C2143: Syntaxfehler: Es fehlt ";" vor "<"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,10): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,24): error C2039: "map" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(20): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,39): error C2039: "function" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\stack(20): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Game.h(24,69): error C2238: Unerwartete(s) Token vor ";"
+  Menu.cpp
+  Player.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(40,19): error C2535: "void Setup::genAxis(void)": Memberfunktion bereits definiert oder deklariert
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(38): message : Siehe Deklaration von "Setup::genAxis"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(12,18): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(12,57): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(13,18): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(13,57): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(14,18): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(14,57): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(19,5): error C2653: "console_utils": Keine Klasse oder Namespace
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(19,20): error C3861: "showCursor": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(34,24): error C2084: Funktion "void Player::askName(void)" hat bereits einen Funktionsrumpf
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(16): message : Siehe vorherige Definition von "askName"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(35,5): error C3861: "titleBox": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(36,22): error C2065: "NAME": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(36,5): error C3861: "currentControlls": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(37,5): error C3861: "showCursor": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(38,20): error C2065: "consoleHeight": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(38,42): error C2065: "consoleWidth": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(38,5): error C3861: "cursorPosition": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(40,20): error C2065: "consoleHeight": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(40,46): error C2065: "consoleWidth": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(40,5): error C3861: "cursorPosition": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(42,20): error C2065: "consoleHeight": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(42,46): error C2065: "consoleWidth": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(42,5): error C3861: "cursorPosition": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(44,5): error C3861: "hideCursor": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(45,11): error C2065: "sleepTime": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(49,18): error C2065: "name": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(52,23): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(52,21): error C2143: Syntaxfehler: Es fehlt ";" vor ":"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(52,40): error C2143: Syntaxfehler: Es fehlt ";" vor ")"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(53,26): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(55,29): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(60,28): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(63,58): error C2838: "UP": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(63,20): error C2065: "UP": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(66,63): error C2838: "DOWN": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(66,25): error C2065: "DOWN": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(66,87): error C2065: "VER": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(69,63): error C2838: "LEFT": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(69,25): error C2065: "LEFT": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(72,63): error C2838: "RIGHT": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(72,25): error C2065: "RIGHT": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(72,88): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(75,63): error C2838: "ROTATE": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(75,25): error C2065: "ROTATE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(76,47): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(76,54): error C2065: "VER": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(76,60): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(80,38): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(82,33): error C2065: "ships": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(88,43): error C2065: "VER": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(90,33): error C2065: "ships": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(96,34): error C2065: "gameSetup": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(96,66): error C2838: "AWAY": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(96,70): error C2065: "AWAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(101,42): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(103,33): error C2065: "ships": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(106,47): error C2065: "VER": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(108,33): error C2065: "ships": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(111,94): error C2065: "HOR": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(116,31): error C2065: "sleepTime": nichtdeklarierter Bezeichner
+  Setup.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(40,19): error C2535: "void Setup::genAxis(void)": Memberfunktion bereits definiert oder deklariert
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.h(38): message : Siehe Deklaration von "Setup::genAxis"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(59,5): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(60,10): error C2065: "shipCount": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(61,13): error C2065: "shipSetting": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(62,30): error C2065: "fieldSize": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(62,42): error C2065: "fieldSize": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(62,72): error C2065: "shipSetting": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,32): error C2065: "lengthShipsFIVE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,32): error C2672: "begin": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::begin(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1844): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C2784: "const _Elem *std::begin(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(55): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,32): error C2672: "end": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::end(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1854): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C2784: "const _Elem *std::end(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(60): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C3536: "<begin>$L0": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,49): error C3536: "<end>$L0": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(64,47): error C2100: Ungültige Dereferenzierung.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(67,21): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(71,18): error C2065: "shipSetting": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(72,30): error C2065: "fieldSize": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(72,42): error C2065: "fieldSize": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(72,72): error C2065: "shipSetting": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,32): error C2065: "lengthShipsTEN": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,32): error C2672: "begin": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::begin(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1844): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C2784: "const _Elem *std::begin(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(55): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,32): error C2672: "end": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::end(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1854): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C2784: "const _Elem *std::end(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(60): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C3536: "<begin>$L1": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,48): error C3536: "<end>$L1": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(74,46): error C2100: Ungültige Dereferenzierung.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(77,21): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(83,20): error C2065: "shipCount": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,28): error C2065: "lengthShipsFIVE": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,28): error C2672: "begin": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::begin(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1844): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C2784: "const _Elem *std::begin(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(55): message : Siehe Deklaration von "std::begin"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,28): error C2672: "end": keine übereinstimmende überladene Funktion gefunden
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C2893: Fehler beim Spezialisieren der Funktionsvorlage "unknown-type std::end(_Container &)".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\xutility(1854): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): message : Mit den folgenden Vorlagenargumenten:
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): message : "_Container=unknown-type"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C2784: "const _Elem *std::end(std::initializer_list<_Elem>) noexcept": Vorlage-Argument für "std::initializer_list<_Elem>" konnte nicht von "unknown-type" hergeleitet werden.
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\initializer_list(60): message : Siehe Deklaration von "std::end"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C3536: "<begin>$L2": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,45): error C3536: "<end>$L2": Kann nicht verwendet werden, bevor es initialisiert wurde.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(85,43): error C2100: Ungültige Dereferenzierung.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(88,17): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(93,9): error C2065: "lenghtsCount": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(93,33): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(93,54): error C2065: "shipsLenght": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(93,27): error C3861: "count": Bezeichner wurde nicht gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(98,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(98,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(100,35): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(100,40): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(101,32): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(101,37): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(102,31): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(102,36): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(104,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(104,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,20): error C2838: "AWAY": Unzulässiger qualifizierter Name in der Memberdeklaration.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,24): error C2065: "AWAY": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,24): error C2131: Ausdruck wurde nicht zu einer Konstanten ausgewertet.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,24): message : Ein nicht konstanter (Teil)ausdruck wurde gefunden.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,31): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,36): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(107,32): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(107,37): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(110,61): warning C4267: "=": Konvertierung von "size_t" nach "int", Datenverlust möglich
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(111,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(111,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(111,50): error C2039: "endl" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(111,54): error C2065: "endl": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(112,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(112,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(114,20): warning C4244: "Initialisierung": Konvertierung von "__int64" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(115,14): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(115,19): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(115,63): error C2039: "endl" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(115,67): error C2065: "endl": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(118,14): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(118,19): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(120,35): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(120,40): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(121,34): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(121,39): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(124,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(124,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(124,73): error C2039: "endl" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(124,77): error C2065: "endl": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(125,10): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(125,15): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(127,31): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(127,36): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(128,33): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(128,38): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(129,31): error C2039: "cout" ist kein Member von "std".
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\string(24): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(129,36): error C2065: "cout": nichtdeklarierter Bezeichner
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Setup.cpp(106,1): error C2051: case-Ausdruck ist keine Konstante
+  Ships.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Ships.cpp(30,18): warning C4553: "==": Ergebnis des Ausdrucks nicht verwendet. War "=" gemeint?
+  UI.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.h(12,37): error C2039: "vector" ist kein Member von "std".
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\predefined C++ types (compiler internal)(341): message : Siehe Deklaration von "std"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.h(12,43): error C4430: Fehlender Typspezifizierer - int wird angenommen. Hinweis: "default-int" wird von C++ nicht unterstützt.
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.h(12,43): error C2143: Syntaxfehler: Es fehlt "," vor "<"
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.h(14,37): error C2061: Syntaxfehler: Bezeichner "Player"
+  Code wird generiert...
