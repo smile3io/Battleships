@@ -1,20 +1,11 @@
-﻿  Player.cpp
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(28,70): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(28,49): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(30,74): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(30,56): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(32,74): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(32,56): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(118,85): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(118,65): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\Player.cpp(122,78): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-  UI.cpp
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(56,70): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(56,49): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(59,62): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(135,69): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(135,49): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(137,58): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(139,58): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
-  Code wird generiert...
+﻿  UI.cpp
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(56,55): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(56,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(59,47): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(135,54): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(135,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(137,43): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(139,43): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(173,54): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
+C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\UI.cpp(173,34): warning C4244: "Argument": Konvertierung von "double" in "int", möglicher Datenverlust
   Battleships.vcxproj -> C:\Users\VWX40C1\Desktop\Coding\C++\Battleships\x64\Debug\Battleships.exe

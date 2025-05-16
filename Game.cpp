@@ -11,7 +11,7 @@ int sleepTime;
 
 Game::Game() : state(GameState::MENU) {
 	menuStack.push(MenuID::MAIN);
-    console_utils::getConsoleSize(consoleWidth, consoleHeight);
+    getConsoleSize(consoleWidth, consoleHeight);
     menuData = {
     {MenuID::MAIN, {
         {'1', "Play"},
@@ -73,39 +73,39 @@ Game::Game() : state(GameState::MENU) {
         {'1', [this]() {menuStack.push(MenuID::MODE); }},
         {'2', [this]() {
             currentControlls(Controlls::FIELDSIZE);
-            console_utils::cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             std::cout << "Current: " << gameSetup.fieldSize << std::endl << std::endl;
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "How big should the field be?" << std::endl;
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
-            console_utils::showCursor();
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            showCursor();
             int size;
             std::cin >> size;
             if (std::cin.fail()) { //Fehlerbehandlung
-                console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+                cursorHorizontalAbsolute(consoleWidth * 0.25);
                 std::cout << "Invalid Input. Please input a number.";
                 Sleep(sleepTime);
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                console_utils::hideCursor();
+                hideCursor();
                 return;
             }
-            console_utils::hideCursor();
+            hideCursor();
             gameSetup.fieldSize = size;
         }},
         {'3', [this]() {
-            console_utils::cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::TEN) {
                 std::cout << "Current: many" << std::endl << std::endl;
             }
             else if (gameSetup.shipSetting == Settings::FIVE) {
                std::cout << "Current: few" << std::endl << std::endl;
             }
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "How many ships?\n\n";
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "[1]  few\n";
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "[2]  many\n";
             int num = _getch();
             if (0 < num < 3) { num == 1 ? gameSetup.shipSetting = Settings::FIVE : gameSetup.shipSetting = Settings::TEN; };
@@ -116,7 +116,7 @@ Game::Game() : state(GameState::MENU) {
               gameSetup.shipSetting = Settings::TEN;
             }
             else {
-                console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+                cursorHorizontalAbsolute(consoleWidth * 0.25);
                std::cout << "Invalid Input.\n";
                Sleep(sleepTime);
                return;
@@ -126,12 +126,12 @@ Game::Game() : state(GameState::MENU) {
             }},
         {'4', [this]() {
             currentControlls(Controlls::SHIPCOUNT);
-            console_utils::cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             std::cout << "Current: " << gameSetup.shipCount << std::endl << std::endl;
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "How many ships?\t(This setting overwrites the automatic number!)\n";
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
-            console_utils::showCursor();
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
+            showCursor();
             int num;
             std::cin >> num;
             if (std::cin.fail()) { //Fehlerbehandlung
@@ -139,26 +139,26 @@ Game::Game() : state(GameState::MENU) {
                 Sleep(sleepTime);
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                console_utils::hideCursor();
+                hideCursor();
                 return;
             }
-            console_utils::hideCursor();
+            hideCursor();
             gameSetup.shipCount = num;
             gameSetup.genShips();
         }},
         {'5', [this]() {
-            console_utils::cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
+            cursorPosition(consoleHeight * 0.6, consoleWidth * 0.25);
             if (gameSetup.shipSetting == Settings::CLOSE) {
                 std::cout << "Current: close\n\n";
             }
             else if (gameSetup.shipSetting == Settings::AWAY) {
                 std::cout << "Current: far\n\n";
             }
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "What distance should the ships be?\n";
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "[1]  close\n";
-            console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+            cursorHorizontalAbsolute(consoleWidth * 0.25);
             std::cout << "[2]  far\n";
             int num = _getch();
             if (num == '1') {
@@ -169,7 +169,7 @@ Game::Game() : state(GameState::MENU) {
             }
             else {
                std::cout << std::endl;
-               console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+               cursorHorizontalAbsolute(consoleWidth * 0.25);
                std::cout << "Invalid Input.\n";
                Sleep(sleepTime);
               return;
@@ -213,19 +213,19 @@ void Game::run() {
 
 void Game::initGame() {
     // clear screen
-    console_utils::eraseInDisplay(2);
+    eraseInDisplay(2);
 
     // 
     fieldDisplayWidth = gameSetup.fieldSize * 2 + 9;
     fieldDisplayHeight = gameSetup.fieldSize + 1 + 4;
     gameSetup.genAxis();
     gameSetup.genShips();
-    console_utils::cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
+    cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
     for (int i = 0; i < gameSetup.playerCount; i++) {
         playerVect.push_back(i + 1);
         playerVect[i].askName();
         playerVect[i].genField();
-        console_utils::cursorPosition(consoleHeight * 0.65 + i * 2, consoleWidth * 0.25);
+        cursorPosition(consoleHeight * 0.65 + i * 2, consoleWidth * 0.25);
     }
     if (gameSetup.playerCount == 1) { playerVect.push_back(2); playerVect[1].name = "AI"; }
     // placing ships for AI
@@ -252,7 +252,7 @@ void Game::placingShips() {
     for (int i = 0; i < playerVect.size(); i++) {
         if (gameSetup.playerCount == 1 && i == 1) break;
         titleBox();
-        console_utils::cursorPosition(consoleHeight * 0.3, consoleWidth * 0.2);
+        cursorPosition(consoleHeight * 0.3, consoleWidth * 0.2);
         playerVect[i].placing();
     }
 }
@@ -363,7 +363,7 @@ void Game::handleMenu() {
         menuActions[currentMenuID][choice]();  // perform specific action
     }
     else {
-        console_utils::cursorPosition(consoleHeight * 0.7, consoleWidth * 0.25);
+        cursorPosition(consoleHeight * 0.7, consoleWidth * 0.25);
         std::cout << "Wrong Input" << std::endl;
         Sleep(sleepTime);
     }

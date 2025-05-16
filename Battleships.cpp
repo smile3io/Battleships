@@ -2,7 +2,7 @@
 #include "console_utils.h"
 
 int main() {
-    console_utils::enableVirtualTerminalProcessing();
+    enableVirtualTerminalProcessing();
     Game game;
     game.run();
     return 0;

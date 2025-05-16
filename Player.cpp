@@ -24,14 +24,14 @@ void Player::genField() {
 void Player::askName() {
     titleBox();
     currentControlls(Controlls::NAME);
-    console_utils::showCursor();
-    console_utils::cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
+    showCursor();
+    cursorPosition(consoleHeight * 0.45, consoleWidth * 0.25);
     std::cout << "Player " << number << " what's your name?\n";
-    console_utils::cursorPosition(consoleHeight * 0.45 + 2, consoleWidth * 0.25);
+    cursorPosition(consoleHeight * 0.45 + 2, consoleWidth * 0.25);
     std::cin >> name;
-    console_utils::cursorPosition(consoleHeight * 0.45 + 4, consoleWidth * 0.25);
+    cursorPosition(consoleHeight * 0.45 + 4, consoleWidth * 0.25);
     std::cout << "Hello " << name << " welcome to Battleships!\n";
-    console_utils::hideCursor();
+    hideCursor();
     Sleep(sleepTime);
 }
 
@@ -109,17 +109,14 @@ void Player::placing() {
                 }
                 else if (input == static_cast<int>(Input::R)) {
                     Rotation newDirection = (direction == Rotation::HOR) ? Rotation::VER : Rotation::HOR;
-                    if ((newDirection == Rotation::HOR && row + length <= gameSetup.fieldSize) ||
-                        (newDirection == Rotation::VER && col + length <= gameSetup.fieldSize)) {
-                        direction = newDirection;
-                    }
+                    if ((newDirection == Rotation::HOR && row + length <= gameSetup.fieldSize) || (newDirection == Rotation::VER && col + length <= gameSetup.fieldSize)) direction = newDirection;
                 }
                 else if (input == static_cast<int>(Input::ENTER)) {
-                    console_utils::cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
+                    cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
                     if (isValidPlacement(length, direction, cursor)) {
                         placeShip(length, direction, cursor);
                         std::cout << "Placed a " << length << " long ship\n";
-                        console_utils::cursorHorizontalAbsolute(consoleWidth * 0.05);
+                        cursorHorizontalAbsolute(consoleWidth * 0.05);
                         std::cout << "(" << (direction == Rotation::HOR ? "horizontally" : "vertically") << ")\n";
                         Sleep(sleepTime);
                         placed = true;

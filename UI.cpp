@@ -7,25 +7,25 @@ extern int sleepTime;
 
 void titleBox() {
     // clear screen
-    console_utils::eraseInDisplay(2);
+    eraseInDisplay(2);
     // visual box around the console
-    console_utils::cursorPosition(1, 1);
+    cursorPosition(1, 1);
     for (int i = 0; i < (consoleWidth - 17) / 2; i++) std::cout << "=";
-    console_utils::selectGraphicRendition(1);
+    selectGraphicRendition(1);
     std::cout << " [ BATTLESHIPS ] ";
-    console_utils::selectGraphicRendition(0);
+    selectGraphicRendition(0);
     for (int i = 0; i < (consoleWidth - 16) / 2; i++) std::cout << "=";
     std::cout << "\n";
     for (int i = 0; i < consoleHeight - 2; i++) std::cout << "|\n";
     for (int i = 0; i < consoleWidth; i++) std::cout << "=";
-    console_utils::cursorPosition(2, consoleWidth);
-    for (int i = 0; i < consoleHeight - 2; i++) { console_utils::cursorHorizontalAbsolute(consoleWidth); std::cout << "|\n"; }
+    cursorPosition(2, consoleWidth);
+    for (int i = 0; i < consoleHeight - 2; i++) { cursorHorizontalAbsolute(consoleWidth); std::cout << "|\n"; }
 }
 
 void currentControlls(Controlls UI) {
-    console_utils::cursorPosition(consoleHeight - 2, 3);
+    cursorPosition(consoleHeight - 2, 3);
     std::cout << "CONTROLLS:\n";
-    console_utils::cursorHorizontalAbsolute(3);
+    cursorHorizontalAbsolute(3);
     switch (UI)
     {
     case Controlls::MENU: // MENU
@@ -53,10 +53,10 @@ void currentControlls(Controlls UI) {
 
 void displayMenu(const std::vector<std::pair<char, std::string>>& options) {
     titleBox();
-    console_utils::cursorPosition(consoleHeight * 0.35, consoleWidth * 0.25);
+    cursorPosition(consoleHeight * 0.35, consoleWidth * 0.25);
     for (auto& pair : options) {
         std::cout << "[" << pair.first << "]  " << pair.second << std::endl;
-        console_utils::cursorHorizontalAbsolute(consoleWidth * 0.25);
+        cursorHorizontalAbsolute(consoleWidth * 0.25);
     }
     currentControlls(Controlls::MENU);
 }
@@ -68,7 +68,7 @@ void printField(std::vector<std::vector<char>> field, int fieldWidth) {
         k < 26 && gameSetup.fieldSize > 26 ? std::cout << gameSetup.xAxisLabel[k] << "  " : std::cout << gameSetup.xAxisLabel[k] << " ";
     }
     std::cout << std::endl;
-    console_utils::cursorHorizontalAbsolute(fieldWidth);
+    cursorHorizontalAbsolute(fieldWidth);
     // y-axis and field
     for (int i = 0; i < gameSetup.fieldSize; i++) {
         if (gameSetup.yAxisLabel[i] < 10) std::cout << " ";
@@ -77,27 +77,27 @@ void printField(std::vector<std::vector<char>> field, int fieldWidth) {
             switch (field[i][j])
             {
             case '~':
-                console_utils::backgroundColor(21);
+                backgroundColor(21);
                 break;
             case 'O':
-                console_utils::backgroundColor(255);
+                backgroundColor(255);
                 break;
             case 'X':
-                console_utils::backgroundColor(196);
+                backgroundColor(196);
                 break;
             case '*':
-                console_utils::backgroundColor(245);
+                backgroundColor(245);
                 break;
             default:
-                console_utils::resetBackgroundColor();
+                resetBackgroundColor();
                 break;
             }
             std::cout << field[i][j] << (gameSetup.fieldSize > 26 ? "  " : " ");
-            console_utils::resetBackgroundColor();
+            resetBackgroundColor();
         }
-        console_utils::cursorBack(fieldDisplayWidth * 2);
-        console_utils::cursorDown();
-        console_utils::cursorHorizontalAbsolute(fieldWidth);
+        cursorBack(fieldDisplayWidth * 2);
+        cursorDown();
+        cursorHorizontalAbsolute(fieldWidth);
     }
 }
 
@@ -132,24 +132,59 @@ void renderPlace(Player& player, std::pair<int, int> cursor, int length, Rotatio
 
     titleBox();
     currentControlls(Controlls::PLACING);
-    console_utils::cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
+    cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
     std::cout << player.name << " your turn\n\n";
-    console_utils::cursorHorizontalAbsolute(consoleWidth * 0.05);
+    cursorHorizontalAbsolute(consoleWidth * 0.05);
     std::cout << "Placing a " << length << " long ship\n";
-    console_utils::cursorHorizontalAbsolute(consoleWidth * 0.05);
+    cursorHorizontalAbsolute(consoleWidth * 0.05);
     std::cout << "(" << (rotation == Rotation::HOR ? "horizontal" : "vertical") << ")\n";
 
     int fieldHeight = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
     int fieldWidth = (consoleWidth + 2 - fieldDisplayWidth) / 2 + 1;
 
-    console_utils::cursorPosition(fieldHeight, fieldWidth);
+    cursorPosition(fieldHeight, fieldWidth);
     printField(renderField, fieldWidth);
     fieldBox(fieldHeight, fieldWidth, &player);
-    console_utils::cursorPosition(consoleHeight + 2, 1);
+    cursorPosition(consoleHeight + 2, 1);
 }
 
 void renderShoot(Player& target, Player& self, std::pair<int, int> cursor) {
+    std::vector<std::vector<char>> enemyRender= target.field;
+    std::vector<std::vector<char>> myRender = self.field;
 
+    int col = cursor.first;
+    int row = cursor.second;
+
+    if (col < 0 || col >= gameSetup.fieldSize || row < 0 || row >= gameSetup.fieldSize) {
+        return;
+    }
+    for (int i = 0; i < gameSetup.fieldSize; i++) {
+        for (int j = 0; j < gameSetup.fieldSize; j++) {
+            if (target.shots[i][j] != ' ') enemyRender[i][j] = target.shots[i][j];
+            if (self.ships[i][j] != ' ') myRender[i][j] = self.ships[i][j];
+            if (self.shots[i][j] != ' ') myRender[i][j] = self.shots[i][j];
+        }
+    }
+
+    enemyRender[col][row] = '#';
+
+    titleBox();
+    currentControlls(Controlls::SHOOTING);
+    cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
+    std::cout << self.name << " your turn\n\n";
+
+    int fieldHeight = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
+    int fieldWidth = (consoleWidth + 2 - fieldDisplayWidth) / 3 + 1;
+
+    cursorPosition(fieldHeight, fieldWidth);
+    printField(myRender, fieldWidth);
+    fieldBox(fieldHeight, fieldWidth, &self);
+
+    cursorPosition(fieldHeight, 2 * fieldWidth);
+    printField(enemyRender, 2 * fieldWidth);
+    fieldBox(fieldHeight, 2 * fieldWidth, &self);
+
+    cursorPosition(consoleHeight + 2, 1);
 }
 
 void renderMulti(std::vector<Player>& playerVect) {
@@ -158,29 +193,27 @@ void renderMulti(std::vector<Player>& playerVect) {
 
 void fieldBox(int x, int y, Player* p) {
     // title or who's board 
-    console_utils::cursorPosition(x - 3, y - 1);
-    console_utils::selectGraphicRendition(1);
+    cursorPosition(x - 3, y - 1);
+    selectGraphicRendition(1);
     std::cout << (p ? p->name + " Board" : " Your Board");
-    console_utils::selectGraphicRendition(0);
+    selectGraphicRendition(0);
     std::cout.flush();
     // box 
     int width = fieldDisplayWidth - 1;
-    console_utils::cursorPosition(x - 2, y - 3);
+    cursorPosition(x - 2, y - 3);
     std::cout << "+";
     for (int i = 0; i < width; ++i) std::cout << "-";
     std::cout << "+";
     for (int i = 0; i <= fieldDisplayHeight - 2; ++i)
     {
-        console_utils::cursorPosition(x - 1 + i, y - 3);
+        cursorPosition(x - 1 + i, y - 3);
         std::cout << "|";
-        console_utils::cursorPosition(x - 1 + i, y + width - 2);
+        cursorPosition(x - 1 + i, y + width - 2);
         std::cout << "|";
     }
-    console_utils::cursorPosition(x + fieldDisplayHeight - 3, y - 3);
+    cursorPosition(x + fieldDisplayHeight - 3, y - 3);
     std::cout << "+";
     for (int i = 0; i < width; ++i) std::cout << "-";
     std::cout << "+";
     std::cout.flush();
 }
-
-

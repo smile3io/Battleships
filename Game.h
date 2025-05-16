@@ -49,4 +49,3 @@ public:
 
 	void setState(GameState newState);
 };
-
