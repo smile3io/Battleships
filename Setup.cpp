@@ -1,4 +1,6 @@
 #include "Setup.h"
+#include "UI.h"
+#include <algorithm>
 
 Setup::Setup() :
     playerCount(1),
@@ -94,7 +96,7 @@ void Setup::genShips() {
 }
 // displays the current rules
 const void Setup::displayRules() {
-    UI::titleBox();
+    titleBox();
     std::cout << "Mode: ";
     switch (mode) {
     case Settings::STANDARD: std::cout << " Classic\n"; break;

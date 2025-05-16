@@ -1,7 +1,15 @@
 #include "Game.h"
 #include "console_utils.h"
 
-Game::Game() : sleepTime(1000), state(GameState::MENU) {
+
+Setup gameSetup;
+int fieldDisplayWidth;
+int fieldDisplayHeight;
+int consoleWidth;
+int consoleHeight;
+int sleepTime;
+
+Game::Game() : state(GameState::MENU) {
 	menuStack.push(MenuID::MAIN);
     console_utils::getConsoleSize(consoleWidth, consoleHeight);
     menuData = {
@@ -50,10 +58,10 @@ Game::Game() : sleepTime(1000), state(GameState::MENU) {
         {'4', [this]() {menuStack.push(MenuID::OPTIONS); }},
         {'0', [this]() {/*return*/}}}},
     {MenuID::PLAY, {
-        {'1', [this]() {gameSetup.playerCount = 1; state = GameState::GAME_LOOP; }},
-        {'2', [this]() {gameSetup.playerCount = 2; state = GameState::GAME_LOOP; }},
-        {'3', [this]() {gameSetup.playerCount = 3; state = GameState::GAME_LOOP; }},
-        {'4', [this]() {gameSetup.playerCount = 4; state = GameState::GAME_LOOP; }},
+        {'1', [this]() {gameSetup.playerCount = 1; state = GameState::PLACE; }},
+        {'2', [this]() {gameSetup.playerCount = 2; state = GameState::PLACE; }},
+        {'3', [this]() {gameSetup.playerCount = 3; state = GameState::PLACE; }},
+        {'4', [this]() {gameSetup.playerCount = 4; state = GameState::PLACE; }},
         {'0', [this]() {menuGoBack(); }}}},
     {MenuID::PRESETS, {
         {'1', [this]() {gameSetup.setPreset(Settings::SMALL); menuStack.push(MenuID::PLAY); gameSetup.genShips(); }},
@@ -189,6 +197,7 @@ void Game::run() {
             handleMenu();
             break;
         case GameState::PLACE:
+            initGame();
             placingShips();
             state = GameState::GAME_LOOP;
             break;
@@ -229,8 +238,8 @@ void Game::initGame() {
                     int col = rand() % (direction == 1 ? gameSetup.fieldSize - lenght + 1 : gameSetup.fieldSize);
                     int row = rand() % (direction == 0 ? gameSetup.fieldSize - lenght + 1 : gameSetup.fieldSize);
                     std::pair<int, int> cursor = { col, row };
-                    if (playerVect[1].isValidPlacement(lenght, (direction ? Rotation::VER : Rotation::HOR), cursor))) {
-                        playerVect[1].placeShip(length, direction, cursor);
+                    if (playerVect[1].isValidPlacement(lenght, (direction ? Rotation::VER : Rotation::HOR), cursor)) {
+                        playerVect[1].placeShip(lenght, (direction ? Rotation::VER : Rotation::HOR), cursor);
                         placed = true;
                     }
                 }
@@ -242,6 +251,8 @@ void Game::initGame() {
 void Game::placingShips() {
     for (int i = 0; i < playerVect.size(); i++) {
         if (gameSetup.playerCount == 1 && i == 1) break;
+        titleBox();
+        console_utils::cursorPosition(consoleHeight * 0.3, consoleWidth * 0.2);
         playerVect[i].placing();
     }
 }
@@ -251,36 +262,44 @@ void Game::gameLoop() {
     bool gameWon = false;
     while (!gameWon) {
         if (gameSetup.playerCount == 1) {
-            renderShoot(playerVect[1], playerVect[0], cursor);
-            int col = cursor.first;  // vertical
-            int row = cursor.second; // horizontal
-            int input = _getch();
-            if (input == 224) input = _getch();
-            if (input == static_cast<int> (Input::UP) && col > 0) {
-                cursor.first--;
-            }
-            else if (input == static_cast<int> (Input::DOWN) && col < gameSetup.fieldSize - 1) {
-                cursor.first++;
-            }
-            else if (input == static_cast<int> (Input::LEFT) && row > 0) {
-                cursor.second--;
-            }
-            else if (input == static_cast<int> (Input::RIGHT) && row < gameSetup.fieldSize - 1) {
-                cursor.second++;
-            }
-            else if (input == static_cast<int> (Input::ENTER)) {
-                if (playerVect[1].gotShot(cursor)) {
-
+            bool hit = false;
+            while (hit) {
+                renderShoot(playerVect[1], playerVect[0], cursor);
+                int col = cursor.first;  // vertical
+                int row = cursor.second; // horizontal
+                int input = _getch();
+                if (input == 224) input = _getch();
+                if (input == static_cast<int> (Input::UP) && col > 0) {
+                    cursor.first--;
+                }
+                else if (input == static_cast<int> (Input::DOWN) && col < gameSetup.fieldSize - 1) {
+                    cursor.first++;
+                }
+                else if (input == static_cast<int> (Input::LEFT) && row > 0) {
+                    cursor.second--;
+                }
+                else if (input == static_cast<int> (Input::RIGHT) && row < gameSetup.fieldSize - 1) {
+                    cursor.second++;
+                }
+                else if (input == static_cast<int> (Input::ENTER)) {
+                    hit = playerVect[0].shoot(playerVect[1], cursor);
+                    if (hit && allShipsSunken(playerVect[1])) {
+                        gameWon = true;
+                        std::cout << playerVect[0].name << " wins!\n";
+                        state = GameState::GAME_OVER;
+                    }
                 }
             }
-            if (!gameWon) {
-                std::pair<int, int> aiPos = getAIPosition(playerVect[1]);
-                if (aiPos.first != -1) {
-                    bool hit = playerVect[0].gotShot(aiPos);
-                    playerVect[1].shots[aiPos.first][aiPos.second] = hit ? 'X' : 'O';
-                    if (allShipsSunken(playerVect[0])) {
-                        gameWon = true;
-                        std::cout << "AI wins!\n";
+            while (hit) {
+                if (!gameWon) {
+                    std::pair<int, int> aiPos = getAIPosition(playerVect[1]);
+                    if (aiPos.first != -1) {
+                        hit = playerVect[0].shoot(playerVect[1], aiPos);
+                        if (hit && allShipsSunken(playerVect[0])) {
+                            gameWon = true;
+                            std::cout << "AI wins!\n";
+                            state = GameState::GAME_OVER;
+                        }
                     }
                 }
             }
@@ -289,7 +308,10 @@ void Game::gameLoop() {
             for (int i = 0; i < playerVect.size(); i++) {
                 bool hit = false;
                 while (hit) {
-                    renderShoot(playerVect[i], cursor);
+                    if (i == 0) 
+                        renderShoot(playerVect[playerVect.size()], playerVect[i], cursor);
+                    else 
+                        renderShoot(playerVect[i - 1], playerVect[i], cursor);
                     int col = cursor.first;  // vertical
                     int row = cursor.second; // horizontal
                     int input = _getch();
@@ -327,7 +349,7 @@ void Game::handleMenu() {
     MenuID currentMenuID = menuStack.top();
     std::vector<std::pair<char, std::string>> currentMenu = menuData[currentMenuID];
     gameSetup.genShips();
-    UI::displayMenu(currentMenu);
+    displayMenu(currentMenu);
 
     char choice = _getch();
     bool validInput = false;
@@ -373,12 +395,10 @@ std::pair<int, int> Game::getAIPosition(const Player& ai) {
 }
 
 void Game::menuGoBack() {
-    if (menuStack.size() > 1) {
+    if (menuStack.size() > 1) 
         menuStack.pop();
-    }
-    else {
+    else
         std::cout << "Fehler" << std::endl;
-    }
 }
 
 void Game::setState(GameState newState) {

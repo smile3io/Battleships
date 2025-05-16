@@ -20,17 +20,11 @@ enum class MenuID {
 class Game
 {
 public:
-	Setup gameSetup;
 	GameState state;
 	std::stack<MenuID> menuStack;
 	std::vector<Player> playerVect;
 	std::map<MenuID, std::vector<std::pair<char, std::string>>> menuData;
 	std::map<MenuID, std::map<char, std::function<void()>>> menuActions;
-	int fieldDisplayWidth;
-	int fieldDisplayHeight;
-	int consoleWidth;
-	int consoleHeight;
-	int sleepTime;
 
 	Game();
 

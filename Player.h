@@ -17,7 +17,6 @@ enum class Input {
 
 class Player {
 public:
-    class Ships;
     std::vector<Ships> allShips;    // list of all ships of a player 
 
     int number;         // player number
@@ -46,7 +45,7 @@ public:
     // prints the field of the current player
     void displayField();
     //
-    bool gotShot(std::pair<int, int> position);
+    bool shoot(Player& player, std::pair<int, int> position);
     //
     void scoring();
 };
