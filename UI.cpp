@@ -149,7 +149,7 @@ void renderPlace(Player& player, std::pair<int, int> cursor, int length, Rotatio
 }
 
 void renderShoot(Player& target, Player& self, std::pair<int, int> cursor) {
-    std::vector<std::vector<char>> enemyRender= target.field;
+    std::vector<std::vector<char>> enemyRender = target.field;
     std::vector<std::vector<char>> myRender = self.field;
 
     int col = cursor.first;
@@ -160,9 +160,9 @@ void renderShoot(Player& target, Player& self, std::pair<int, int> cursor) {
     }
     for (int i = 0; i < gameSetup.fieldSize; i++) {
         for (int j = 0; j < gameSetup.fieldSize; j++) {
-            if (target.shots[i][j] != ' ') enemyRender[i][j] = target.shots[i][j];
+            if (self.shots[i][j] != ' ') enemyRender[i][j] = self.shots[i][j];
             if (self.ships[i][j] != ' ') myRender[i][j] = self.ships[i][j];
-            if (self.shots[i][j] != ' ') myRender[i][j] = self.shots[i][j];
+            if (self.opponentShots[i][j] != ' ') myRender[i][j] = self.opponentShots[i][j];
         }
     }
 
@@ -171,17 +171,18 @@ void renderShoot(Player& target, Player& self, std::pair<int, int> cursor) {
     titleBox();
     currentControlls(Controlls::SHOOTING);
     cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
-    std::cout << self.name << " your turn\n\n";
+    std::cout << self.name << ", your turn to shoot\n";
+    cursorPosition(consoleHeight + 2, 1);
 
     int fieldHeight = (consoleHeight + 2 - fieldDisplayHeight) / 2 + 1;
     int fieldWidth = (consoleWidth + 2 - fieldDisplayWidth) / 3 + 1;
 
     cursorPosition(fieldHeight, fieldWidth);
-    printField(myRender, fieldWidth);
-    fieldBox(fieldHeight, fieldWidth, &self);
+    printField(enemyRender, fieldWidth);
+    fieldBox(fieldHeight, fieldWidth, &target);
 
     cursorPosition(fieldHeight, 2 * fieldWidth);
-    printField(enemyRender, 2 * fieldWidth);
+    printField(myRender, 2 * fieldWidth);
     fieldBox(fieldHeight, 2 * fieldWidth, &self);
 
     cursorPosition(consoleHeight + 2, 1);
@@ -195,7 +196,7 @@ void fieldBox(int x, int y, Player* p) {
     // title or who's board 
     cursorPosition(x - 3, y - 1);
     selectGraphicRendition(1);
-    std::cout << (p ? p->name + " Board" : " Your Board");
+    std::cout << p->name + " Board";
     selectGraphicRendition(0);
     std::cout.flush();
     // box 

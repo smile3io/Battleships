@@ -28,24 +28,24 @@ public:
 
 	Game();
 
-
+	// starts the game
 	void run();
-
+	// initalizes game with current settings
 	void initGame();
-
+	// placing ships off all players
 	void placingShips();
-
+	// gameloop conists off shooting between player
 	void gameLoop();
-
+	// maybe later score display etc
 	void gameOver();
-
+	// menu navigation and code calling
 	void handleMenu();
-
+	// check if all ships of a player has sunken
 	bool allShipsSunken(const Player& player);
-
+	// generates a valid position for the ai to shoot
 	std::pair<int, int> getAIPosition(const Player& ai);
-
+	// goes one menu back
 	void menuGoBack();
-
+	// sets current gamestate (not used)
 	void setState(GameState newState);
 };

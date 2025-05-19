@@ -32,12 +32,12 @@ public:
 
     // standard constructor
     Setup();
-    // 
+    // sets the settings preset 
     void setPreset(Settings difficulty);
-    // 
+    // generates axis due to variable fieldsize and saves the result
     void genAxis();
-    // 
+    // prints out the rules depending on the current settings
     const void displayRules();
-    //
+    // generates the ships depending on the fieldsize and shipcount setting
     void genShips();
 };

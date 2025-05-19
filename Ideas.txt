@@ -6,6 +6,21 @@
 - _kbhit vor key press
 
 
+// . ~ nichts  * Schiff  O kein Treffer  X Treffer  # Cursor  | = 124  – = 150  — = 151 versenkt
+
+
+//TODO: Implementiere die Spiellogik.  Dies ist das Herz des Spiels.  Es beinhaltet:
+// 1.  Den Spielern abwechselnd das Schießen zu ermöglichen.
+// 2.  Die Eingabe des Spielers zu verarbeiten (z.B. welcher Punkt beschossen wird).
+// 3.  Zu überprüfen, ob ein Schiff getroffen wurde.
+// 4.  Den Zustand des Spielfelds zu aktualisieren.
+// 5.  Zu überprüfen, ob ein Schiff versenkt wurde.
+// 6.  Zu überprüfen, ob das Spiel vorbei ist (alle Schiffe eines Spielers versenkt).
+// 7.  Die Punktzahl zu aktualisieren.
+// 8.  Das Spielfeld anzuzeigen.
+
+
+
 - zwei windows für jeden eins
 - leaderboard kann auf zb sql oder exel oder sheets datei zugreifen und diese umschreiben bzw lesen und dieses dann ausgeben
 - Salvo mode 5 shots at once

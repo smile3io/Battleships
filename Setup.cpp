@@ -11,7 +11,6 @@ Setup::Setup() :
     shipCount(0),
     aiDifficulty(Settings::NORMAL) {}
 
-
 // diff between presets 
 void Setup::setPreset(Settings difficulty) {
     switch (difficulty) {

@@ -21,6 +21,4 @@ public:
     bool isSunken();
     // checks if a shot is a hit on this ship and marks the segment as hit
     bool isHit(std::pair<int, int> cord);
-
-    // void getSegments();
 };

@@ -7,7 +7,7 @@ int fieldDisplayWidth;
 int fieldDisplayHeight;
 int consoleWidth;
 int consoleHeight;
-int sleepTime;
+int sleepTime = 1000;
 
 Game::Game() : state(GameState::MENU) {
 	menuStack.push(MenuID::MAIN);
@@ -191,7 +191,8 @@ Game::Game() : state(GameState::MENU) {
 }
 
 void Game::run() {
-	while (true) {
+    bool game = true;
+	while (game) {
         switch (state) {
         case GameState::MENU:
             handleMenu();
@@ -206,6 +207,7 @@ void Game::run() {
             break;
         case GameState::GAME_OVER:
             gameOver();
+            game = false;
             break;
         }
 	}
@@ -214,7 +216,7 @@ void Game::run() {
 void Game::initGame() {
     // clear screen
     eraseInDisplay(2);
-
+    srand(time(0));
     // 
     fieldDisplayWidth = gameSetup.fieldSize * 2 + 9;
     fieldDisplayHeight = gameSetup.fieldSize + 1 + 4;
@@ -258,88 +260,112 @@ void Game::placingShips() {
 }
 
 void Game::gameLoop() {
-    std::pair<int, int> cursor = {1, 1};
+    std::pair<int, int> cursor = { 1, 1 };
     bool gameWon = false;
     while (!gameWon) {
+        //singleplayer vs AI
         if (gameSetup.playerCount == 1) {
-            bool hit = false;
-            while (hit) {
-                renderShoot(playerVect[1], playerVect[0], cursor);
-                int col = cursor.first;  // vertical
-                int row = cursor.second; // horizontal
-                int input = _getch();
-                if (input == 224) input = _getch();
-                if (input == static_cast<int> (Input::UP) && col > 0) {
-                    cursor.first--;
-                }
-                else if (input == static_cast<int> (Input::DOWN) && col < gameSetup.fieldSize - 1) {
-                    cursor.first++;
-                }
-                else if (input == static_cast<int> (Input::LEFT) && row > 0) {
-                    cursor.second--;
-                }
-                else if (input == static_cast<int> (Input::RIGHT) && row < gameSetup.fieldSize - 1) {
-                    cursor.second++;
-                }
-                else if (input == static_cast<int> (Input::ENTER)) {
-                    hit = playerVect[0].shoot(playerVect[1], cursor);
-                    if (hit && allShipsSunken(playerVect[1])) {
-                        gameWon = true;
-                        std::cout << playerVect[0].name << " wins!\n";
-                        state = GameState::GAME_OVER;
+            // Human turn
+            bool shotFired = false;
+            while (!shotFired) {
+                bool hit = false;
+                do {
+                    renderShoot(playerVect[1], playerVect[0], cursor);
+                    int input = _getch();
+                    if (input == 224) input = _getch(); // Handle arrow key prefix
+                    if (input == static_cast<int>(Input::UP) && cursor.first > 0) {
+                        cursor.first--;
                     }
-                }
+                    else if (input == static_cast<int>(Input::DOWN) && cursor.first < gameSetup.fieldSize - 1) {
+                        cursor.first++;
+                    }
+                    else if (input == static_cast<int>(Input::LEFT) && cursor.second > 0) {
+                        cursor.second--;
+                    }
+                    else if (input == static_cast<int>(Input::RIGHT) && cursor.second < gameSetup.fieldSize - 1) {
+                        cursor.second++;
+                    }
+                    else if (input == static_cast<int>(Input::ENTER)) {
+                        cursorPosition(consoleHeight * 0.5, consoleWidth * 0.05);
+                        if (playerVect[0].shots[cursor.first][cursor.second] == 'X' || playerVect[0].shots[cursor.first][cursor.second] == 'O') {
+                            std::cout << "Invalid shot! Try again.\n";
+                            Sleep(sleepTime);
+                            continue;
+                        }
+                        hit = playerVect[0].shoot(playerVect[1], cursor);
+                        shotFired = true;
+                        if (allShipsSunken(playerVect[1])) {
+                            gameWon = true;
+                            titleBox();
+                            cursorPosition(consoleHeight * 0.5, consoleWidth * 0.5 - 5);
+                            std::cout << playerVect[0].name << " wins!\n";
+                            state = GameState::GAME_OVER;
+                        }
+                    }
+                } while (hit);
             }
-            while (hit) {
-                if (!gameWon) {
+            // AI turn
+            if (!gameWon) {
+                bool hit = false;
+                do {
                     std::pair<int, int> aiPos = getAIPosition(playerVect[1]);
                     if (aiPos.first != -1) {
-                        hit = playerVect[0].shoot(playerVect[1], aiPos);
-                        if (hit && allShipsSunken(playerVect[0])) {
+                        hit = playerVect[1].aiShoot(playerVect[0], aiPos);
+                        if (allShipsSunken(playerVect[0])) {
                             gameWon = true;
+                            titleBox();
+                            cursorPosition(consoleHeight * 0.5, consoleWidth * 0.5 - 5);
                             std::cout << "AI wins!\n";
                             state = GameState::GAME_OVER;
                         }
                     }
-                }
+                } while (hit);
             }
         }
-        else {
-            for (int i = 0; i < playerVect.size(); i++) {
-                bool hit = false;
-                while (hit) {
-                    if (i == 0) 
-                        renderShoot(playerVect[playerVect.size()], playerVect[i], cursor);
-                    else 
-                        renderShoot(playerVect[i - 1], playerVect[i], cursor);
-                    int col = cursor.first;  // vertical
-                    int row = cursor.second; // horizontal
-                    int input = _getch();
-                    if (input == static_cast<int> (Input::UP) && col > 0) {
-                        cursor.first--;
-                    }
-                    else if (input == static_cast<int> (Input::DOWN) && col < gameSetup.fieldSize - 1) {
-                        cursor.first++;
-                    }
-                    else if (input == static_cast<int> (Input::LEFT) && row > 0) {
-                        cursor.second--;
-                    }
-                    else if (input == static_cast<int> (Input::RIGHT) && row < gameSetup.fieldSize - 1) {
-                        cursor.second++;
-                    }
-                    else if (input == static_cast<int> (Input::ENTER)) {
-                        bool valid = false;
-                        if (playerVect[i].ships[col][row] == '*') {
-                            playerVect[i].shots[col][row] = 'X';
-                            std::cout << "HIT\n";
+        // 1 vs 1
+        else if (gameSetup.playerCount == 2) {
+            // Multi-player (2 or more players)
+            for (int i = 0; i < playerVect.size() && !gameWon; i++) {
+                bool shotFired = false;
+                while (!shotFired) {
+                    bool hit = false;
+                    do {
+                        // Choose target: next player in sequence (wrap around)
+                        int targetIndex = (i + 1) % playerVect.size();
+                        renderShoot(playerVect[targetIndex], playerVect[i], cursor);
+                        int input = _getch();
+                        if (input == 224) input = _getch();
+                        if (input == static_cast<int>(Input::UP) && cursor.first > 0) {
+                            cursor.first--;
                         }
-                        else {
-                            playerVect[i].shots[col][row] = 'O';
-                            std::cout << "MISS\n";
+                        else if (input == static_cast<int>(Input::DOWN) && cursor.first < gameSetup.fieldSize - 1) {
+                            cursor.first++;
                         }
-                    }
+                        else if (input == static_cast<int>(Input::LEFT) && cursor.second > 0) {
+                            cursor.second--;
+                        }
+                        else if (input == static_cast<int>(Input::RIGHT) && cursor.second < gameSetup.fieldSize - 1) {
+                            cursor.second++;
+                        }
+                        else if (input == static_cast<int>(Input::ENTER)) {
+                            cursorPosition(consoleHeight * 0.5, consoleWidth * 0.05);
+                            if (playerVect[i].shots[cursor.first][cursor.second] == 'X' || playerVect[i].shots[cursor.first][cursor.second] == 'O') {
+                                std::cout << "Invalid shot! Try again.\n";
+                                Sleep(sleepTime);
+                                continue;
+                            }
+                            hit = playerVect[i].shoot(playerVect[targetIndex], cursor);
+                            shotFired = true;
+                            if (allShipsSunken(playerVect[targetIndex])) {
+                                gameWon = true;
+                                titleBox();
+                                cursorPosition(consoleHeight * 0.5, consoleWidth * 0.5 - 5);
+                                std::cout << playerVect[i].name << " wins!\n";
+                                state = GameState::GAME_OVER;
+                            }
+                        }
+                    } while (hit);
                 }
-
             }
         }
     }
@@ -370,7 +396,7 @@ void Game::handleMenu() {
 }
 
 void Game::gameOver() {
-
+    _getch();
 }
 
 bool Game::allShipsSunken(const Player& player) {
