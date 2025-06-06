@@ -22,6 +22,19 @@ void titleBox() {
     for (int i = 0; i < consoleHeight - 2; i++) { cursorHorizontalAbsolute(consoleWidth); std::cout << "|\n"; }
 }
 
+void shipDisplay(Player& player) {
+    cursorPosition(consoleHeight * 0.3, consoleWidth * 0.8);
+    for (auto ship : player.allShips) {
+        ship.sunken ? backgroundColor(196) : resetBackgroundColor();
+        for (int i = 1; i <= ship.size; i++) {
+            i == ship.size ? std::cout << "#" : std::cout << "# ";
+        }
+        cursorNextLine(2);
+        cursorHorizontalAbsolute(consoleWidth * 0.8);
+    }
+    resetBackgroundColor();
+}
+
 void currentControlls(Controlls UI) {
     cursorPosition(consoleHeight - 2, 3);
     std::cout << "CONTROLLS:\n";
@@ -169,6 +182,7 @@ void renderShoot(Player& target, Player& self, std::pair<int, int> cursor) {
     enemyRender[col][row] = '#';
 
     titleBox();
+    shipDisplay(target);
     currentControlls(Controlls::SHOOTING);
     cursorPosition(consoleHeight * 0.3, consoleWidth * 0.05);
     std::cout << self.name << ", your turn to shoot\n";

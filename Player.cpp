@@ -5,7 +5,6 @@
 #include <conio.h>
 #include <windows.h>
 
-
 extern Setup gameSetup;
 extern int consoleWidth, consoleHeight;
 extern int sleepTime;
@@ -67,6 +66,7 @@ void Player::placing() {
                 int row = cursor.second; // Column index (x)
                 int input = _getch();
                 if (input == 224) input = _getch(); // Handle arrow key prefix
+                FlushConsoleInputBuffer(GetStdHandle(STD_INPUT_HANDLE));    // Clear input buffer
                 if (input == static_cast<int>(Input::UP) && col > 0) {
                     cursor.first--;
                 }
@@ -177,5 +177,6 @@ void Player::scoring() {
             if (segment.first) hits++;
         }
     }
-    score = hits * 10 + sunkenShips * 50 - shotsFired * 2;
+    shotsMissed = shotsFired - hits;
+    score = hits * 10 + sunkenShips * 50 - shotsMissed * 10;
 }

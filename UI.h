@@ -12,6 +12,8 @@ enum class Controlls {
 
 // prints a visual box around the console
 void titleBox();
+// prints a display to so all the enemies Ships and if they are sunk
+void shipDisplay(Player& player);
 // displayes the current controlls on the bottom left
 void currentControlls(Controlls UI);
 // displays the current menu

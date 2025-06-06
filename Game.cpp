@@ -296,9 +296,6 @@ void Game::gameLoop() {
                         shotFired = true;
                         if (allShipsSunken(playerVect[1])) {
                             gameWon = true;
-                            titleBox();
-                            cursorPosition(consoleHeight * 0.5, consoleWidth * 0.5 - 5);
-                            std::cout << playerVect[0].name << " wins!\n";
                             state = GameState::GAME_OVER;
                         }
                     }
@@ -396,6 +393,15 @@ void Game::handleMenu() {
 }
 
 void Game::gameOver() {
+    titleBox();
+    cursorPosition(consoleHeight * 0.5, consoleWidth * 0.5 - 5);
+    std::cout << playerVect[0].name << " wins!\n";
+    cursorHorizontalAbsolute(consoleWidth * 0.5);
+    for (auto player : playerVect) {
+        player.scoring();
+        cursorHorizontalAbsolute(consoleHeight * 0.5);
+        std::cout << player.name << " has a score of " << player.score << " with " << player.shotsFired << " Shots" << std::endl;
+    }
     _getch();
 }
 

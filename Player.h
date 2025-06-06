@@ -26,7 +26,8 @@ public:
     std::vector<std::vector<char>> shots; // shot position
     std::vector<std::vector<char>> opponentShots;
 
-    int shotsFired;
+    int shotsFired; 
+    int shotsMissed;
     int score;      // session score calc -> ships sunken points
 
     // create the player with a number
